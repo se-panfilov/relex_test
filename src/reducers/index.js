@@ -1,1 +1,1 @@
-export { default as counter } from './counter_reducer';
+export { default as contact } from './contact_reducer';
