@@ -1,3 +1,8 @@
 node_modules
 npm-debug.log
 dist/bundle*
+.idea/
+react_homework/
+*.log
+.DS_Store
+yarn.lock
