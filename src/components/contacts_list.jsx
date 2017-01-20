@@ -24,4 +24,8 @@ class Contactslist extends React.Component {
   }
 }
 
+@connect(state => ({
+  ContactslistData: state.contacts
+}))
+
 export default Contactslist

@@ -13,36 +13,36 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {
-  // console.info(action);
-  if (action.type === ADD_CONTACT) return addContact({ firstName: 'qqq', lastName: 'www' }, state);// TODO (S.Panfilov)
-  if (action.type === REMOVE_CONTACT) return removeContact('123', state);// TODO (S.Panfilov)
+  if (action.type === ADD_CONTACT) return addContact({ firstName: action.firstName, lastName: action.lastName }, state);
+  if (action.type === REMOVE_CONTACT) return removeContact(action.id, state);
   return state;
 }
 
-
-function Contact (firstName, lastName, someState) {
+function Contact (firstName, lastName, contactsArr) {
   // TODO (S.Panfilov)add  checks here for mandatory fields
-  this._id = this.getNewId(someState);
+  this._id = this.getNewId(contactsArr);
   // TODO (S.Panfilov)perhaps init set/get
   this.firstName = firstName;
   this.lastName = lastName;
 }
 
-Contact.prototype.getNewId = function (contactsArr) {
-  if (contactsArr.length === 0) return 0;
+Contact.prototype.getNewId = function (arr) {
+  if (arr.length === 0) return 0;
 
   // TODO (S.Panfilov) This would be sucks in case of async, but ok for test task
-  const latestId = contactsArr.sort((a, b) => b.id - a.id)[0].id;
-  const time = (new Date()).getTime().toString().slice(-5);
-  return latestId + 1 + time;
+  const latestId = arr.sort((a, b) => b._id - a._id)[0]._id;
+  const time = +((new Date()).getTime().toString().slice(-5));
+  return +latestId + 1 + time;
 };
 
 function addContact ({ firstName, lastName }, state) {
-  state.contacts.push(new Contact(firstName, lastName));// TODO (S.Panfilov)check initialState for immutable
-  return state;
+  const newState =  Object.assign({}, state); // TODO (S.Panfilov)check for immutable
+  newState.contacts = state.contacts.concat(new Contact(firstName, lastName, state.contacts));
+  return newState
 }
 
 function removeContact (id, state) {
-  state.contacts = state.contacts.filter(v => v.id !== id);// TODO (S.Panfilov)check initialState for immutable
-  return state;
+  const newState =  Object.assign({}, state);
+  newState.contacts = state.contacts.filter(v => v._id !== id);
+  return newState
 }

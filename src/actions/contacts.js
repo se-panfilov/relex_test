@@ -3,14 +3,17 @@ import {
   REMOVE_CONTACT
 } from '../constants/action_types';
 
-export function addContact() {
+export function addContact(firstName, lastName) {
   return {
-    type: ADD_CONTACT
+    type: ADD_CONTACT,
+    firstName,
+    lastName
   };
 }
 
-export function removeContact() {
+export function removeContact(id) {
   return {
-    type: REMOVE_CONTACT
+    type: REMOVE_CONTACT,
+    id
   };
 }
