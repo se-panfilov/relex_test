@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 class ContactsListItem extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {secondsElapsed: 0};
-  // }
+  static propTypes = {
+    id: PropTypes.number.isRequired,
+    firstName: PropTypes.string.isRequired,
+    lastName: PropTypes.string.isRequired
+  };
+
   render () {
     return (
       <li className="contacts__list-item">

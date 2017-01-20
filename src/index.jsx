@@ -18,6 +18,7 @@ store.dispatch(addContact('John', 'Smith'));
 
 ReactDOM.render((
   <Provider store={store}>
-    <ContactsList />
+    <ContactsList/>
+    {/*{() => <ContactsList /> }*/}
   </Provider>
 ), document.getElementById('main'));
