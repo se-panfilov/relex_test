@@ -4,12 +4,12 @@ import { combineReducers, createStore } from 'redux';
 import { Provider } from 'react-redux';
 
 import * as reducers from './reducers';
-import Contact from './components/contact';
+import ContactsList from './components/contacts_list';
 
 const store = createStore(combineReducers(reducers));
 
 ReactDOM.render((
   <Provider store={store}>
-    <Contact />
+    <ContactsList />
   </Provider>
 ), document.getElementById('main'));
