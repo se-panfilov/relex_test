@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 // import styles from './ContactsList.css';
 
-import { addContact, removeContact } from '../actions/contacts';
+import { addContact, selectContact, removeContact } from '../actions/contacts';
 import ContactsListItem from './contacts_list_item';
 
 export default class ContactsList extends React.Component {

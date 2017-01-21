@@ -6,7 +6,6 @@ import * as ContactsActions from '../actions/contacts';
 import { ContactsList } from '../components';
 
 class ContactsApp extends React.Component {
-// class ContactsApp extends React.Component {
   static propTypes = {
     contacts: PropTypes.array.isRequired,
     // actions: PropTypes.object.isRequired
@@ -20,7 +19,8 @@ class ContactsApp extends React.Component {
     return (
     <div className="app">
       <h1>Contacts</h1>
-      <ContactsList contacts={contacts} actions={actions} />
+      <ContactsList contacts={contacts} actions={actions}/>
+      <ContactDetails selected={contact} actions={actions}/>
     </div>
     );
   }

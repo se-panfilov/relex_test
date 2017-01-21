@@ -1,2 +1,3 @@
 export const ADD_CONTACT = 'ADD_CONTACT';
+export const SELECT_CONTACT = 'SELECT_CONTACT';
 export const REMOVE_CONTACT = 'REMOVE_CONTACT';

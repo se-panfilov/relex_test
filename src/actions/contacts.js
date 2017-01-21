@@ -1,5 +1,6 @@
 import {
   ADD_CONTACT,
+  SELECT_CONTACT,
   REMOVE_CONTACT
 } from '../constants/action_types';
 
@@ -8,6 +9,13 @@ export function addContact(firstName, lastName) {
     type: ADD_CONTACT,
     firstName,
     lastName
+  };
+}
+
+export function selectContact(id) {
+  return {
+    type: SELECT_CONTACT,
+    id
   };
 }
 
