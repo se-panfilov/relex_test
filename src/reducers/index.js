@@ -1,1 +1,1 @@
-export { default as contact } from './contact_reducer';
+export { default as contacts } from './contact_reducer';

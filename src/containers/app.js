@@ -12,8 +12,8 @@ export default class App extends React.Component {
   render () {
     return (
       <div>
-        <Provider store={store}>// TODO (S.Panfilov) cur work point //store.contacts just empty
-          <ContactsApp contacts="store.contacts"/>
+        <Provider store={store}>
+          <ContactsApp/>
         </Provider>
       </div>
     );

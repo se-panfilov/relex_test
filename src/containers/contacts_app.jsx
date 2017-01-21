@@ -14,7 +14,7 @@ class ContactsApp extends React.Component {
   };
 
   render () {
-    const { Contacts, dispatch } = this.props;
+    const { contacts, dispatch } = this.props;
     const actions = bindActionCreators(ContactsActions, dispatch);
 
     return (
@@ -27,5 +27,6 @@ class ContactsApp extends React.Component {
 }
 
 export default connect(state => ({
-  contacts: state.contacts
-}))(ContactsList);
+  contacts: state.contacts.contacts
+  // contacts: state.contacts
+}))(ContactsApp);

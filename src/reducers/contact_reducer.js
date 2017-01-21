@@ -38,11 +38,11 @@ Contact.prototype.getNewId = function (arr) {
 function addContact ({ firstName, lastName }, state) {
   const newState =  Object.assign({}, state); // TODO (S.Panfilov)check for immutable
   newState.contacts = state.contacts.concat(new Contact(firstName, lastName, state.contacts));
-  return newState
+  return newState;
 }
 
 function removeContact (id, state) {
   const newState =  Object.assign({}, state);
   newState.contacts = state.contacts.filter(v => v._id !== id);
-  return newState
+  return newState;
 }

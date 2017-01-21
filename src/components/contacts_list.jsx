@@ -4,25 +4,28 @@ import { connect } from 'react-redux';
 // import styles from './ContactsList.css';
 
 import { addContact, removeContact } from '../actions/contacts';
-import { ContactsListItem } from '../components/contacts_list_item';
+import ContactsListItem from './contacts_list_item';
 
 export default class ContactsList extends React.Component {
   static propTypes = {
-    contacts: PropTypes.array.isRequired//,
-    // actions: PropTypes.object.isRequired
+    contacts: PropTypes.array.isRequired,
+    actions: PropTypes.object.isRequired
   };
 
   render () {
-    // const { contacts, dispatch } = this.props;
-    // const actions = bindActionCreators(FriendsActions, dispatch);
+    const { contacts, dispatch } = this.props;
+    // const actions = bindActionCreators(ContactsActions, dispatch);
 
     return (
       <div className="contacts">
         <ul className="contacts__list">
-          <li>asd</li>
           {contacts.map(item =>
-            <li key={item.id}>{item.firstName}</li>
-            //<ContactsListItem firstName={item.firstName} lastName={item.lastName}></ContactsListItem>
+            <ContactsListItem
+              key={item._id}
+              id={item._id}
+              firstName={item.firstName}
+              lastName={item.lastName}
+              />
           )}
         </ul>
       </div>
