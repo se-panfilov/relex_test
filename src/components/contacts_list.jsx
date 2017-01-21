@@ -17,8 +17,8 @@ export default class ContactsList extends React.Component {
     // const actions = bindActionCreators(ContactsActions, dispatch);
 
     return (
-      <div className="contacts">
-        <ul className="contacts__list">
+      <div className="contacts-list">
+        <ul className="contacts-list__list">
           {contacts.map(item =>
             <ContactsListItem
               key={item._id}

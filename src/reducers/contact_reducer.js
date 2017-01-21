@@ -5,20 +5,54 @@ import {
 } from '../constants/action_types';
 
 const initialState = {
-  selectedId: null,
+  // _selectedId: null,
+  _selectedId: 2,
+  set selectedId (id) {// TODO (S.Panfilov) redo this (take a look at shopping-cart example)
+    this._selectedId = id;
+  },
+  get selected () {
+    // TODO (S.Panfilov) perhaps it's a bad place for getter
+    if (!this._selectedId && this._selectedId !== 0) return null;
+    return (this.contacts.filter(v => v._id === this._selectedId))[0];
+  },
   contacts: [
-    { _id: 1, firstName: 'Morpheus', lastName: 'Unknown' },
-    { _id: 2, firstName: 'Tomas', lastName: 'Anderson' },
-    { _id: 3, firstName: 'Trinity', lastName: 'Willbeneosgf' },
-    { _id: 4, firstName: 'Ghost', lastName: 'Forgotten' }
+    { _id: 1, firstName: 'Samuel', lastName: 'Colt' },
+    { _id: 2, firstName: 'Gal', lastName: 'Uziel' },
+    { _id: 3, firstName: 'John', lastName: 'Thompson' },
+    { _id: 4, firstName: 'Mikhail', lastName: 'Kalashnikov' },
+    { _id: 5, firstName: 'Gaston', lastName: 'Glock' },
+    { _id: 6, firstName: 'Leon', lastName: 'Nagant' }
   ]
 };
 
+const actions = {
+  [ADD_CONTACT] ({ firstName, lastName }, state) {
+    // TODO (S.Panfilov)check for immutable
+    state.contacts = state.contacts.concat(new Contact(firstName, lastName, state.contacts));
+
+    return state;
+  },
+  [SELECT_CONTACT] ({ id }, state) {
+    // const newState = Object.assign({}, state);
+    if (state.contacts.filter(v => v._id === id).length < 1) throw 'selectContact: unknown id';
+    // state._selectedId = id;
+    state.selectedId = id;
+
+    return state;
+  },
+  [REMOVE_CONTACT] ({ id }, state) {
+    // const newState = Object.assign({}, state);
+    state.contacts = state.contacts.filter(v => v._id !== id);
+    if (state._selectedId === id) state._selectedId = null;// TODO (S.Panfilov) set selected
+
+    return state;
+  }
+};
+
 export default function (state = initialState, action) {
-  if (action.type === ADD_CONTACT) return addContact({ firstName: action.firstName, lastName: action.lastName }, state);
-  if (action.type === SELECT_CONTACT) return selectContact(action.id, state);
-  if (action.type === REMOVE_CONTACT) return removeContact(action.id, state);
-  return state;
+  if (!Object.keys(actions).hasOwnProperty(action.type)) return state;
+  const newState = Object.assign({}, state);
+  return actions[action.type](actions, newState);
 }
 
 function Contact (firstName, lastName, contactsArr) {
@@ -37,32 +71,3 @@ Contact.prototype.getNewId = function (arr) {
   const time = +((new Date()).getTime().toString().slice(-5));
   return +latestId + 1 + time;
 };
-
-function addContact ({ firstName, lastName }, state) {
-  const newState = Object.assign({}, state); // TODO (S.Panfilov)check for immutable
-  newState.contacts = state.contacts.concat(new Contact(firstName, lastName, state.contacts));
-  return newState;
-}
-
-function selectContact (id, state) {
-  const newState = Object.assign({}, state);
-  if (newState.contacts.filter(v => v._id === id).length < 1) throw 'selectContact: unknown id';
-  newState.selectedId = id;
-
-  return newState;
-}
-
-function getSelectedContact (state) {
-  // TODO (S.Panfilov)perhaps it's a bad place for getter
-  if (!state.selectedId && state.selectedId !== 0) return null;
-  const result = state.contacts.filter(v => v._id === state.selectedId);
-  return result.length > 0 ? result[0] : null;
-}
-
-function removeContact (id, state) {
-  const newState = Object.assign({}, state);
-  newState.contacts = state.contacts.filter(v => v._id !== id);
-  if (newState.selectedId === id) newState.selectedId = null;
-
-  return newState;
-}

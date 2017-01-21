@@ -9,8 +9,8 @@ export default class ContactsListItem extends React.Component {
 
   render () {
     return (
-      <li className="contacts__list-item">
-        <span className="contacts__item-text">{this.props.firstName} {this.props.lastName}</span>
+      <li className="contacts-list__list-item">
+        <span className="contacts-list__item-text">{this.props.firstName} {this.props.lastName}</span>
       </li>
     );
   }

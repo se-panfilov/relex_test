@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as ContactsActions from '../actions/contacts';
-import { ContactsList } from '../components';
+import { ContactsList, ContactDetails } from '../components';
 
 class ContactsApp extends React.Component {
   static propTypes = {
@@ -13,20 +13,21 @@ class ContactsApp extends React.Component {
   };
 
   render () {
-    const { contacts, dispatch } = this.props;
+    const { contacts, selected, dispatch } = this.props;
     const actions = bindActionCreators(ContactsActions, dispatch);
 
     return (
     <div className="app">
       <h1>Contacts</h1>
       <ContactsList contacts={contacts} actions={actions}/>
-      <ContactDetails selected={contact} actions={actions}/>
+      <ContactDetails selected={selected} actions={actions}/>
     </div>
     );
   }
 }
 
 export default connect(state => ({
-  contacts: state.contacts.contacts
+  contacts: state.contacts.contacts,
+  selected: state.contacts.selected
   // contacts: state.contacts
 }))(ContactsApp);
