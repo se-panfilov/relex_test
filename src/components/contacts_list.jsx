@@ -16,7 +16,6 @@ export default class ContactsList extends React.Component {
     super(props);
 
     this.state = {
-      filter: '',
       displayed: props.contacts
     };
   }
@@ -32,7 +31,6 @@ export default class ContactsList extends React.Component {
     });
 
     this.setState({
-      filter: '',
       displayed: newDisplayed
     })
   };
@@ -40,6 +38,21 @@ export default class ContactsList extends React.Component {
   render () {
     const { contacts, dispatch, actions } = this.props;
     const { selectContact } = actions;
+
+    let getListItem;
+    if (contacts && contacts.length > 0) {
+      getListItem = (item) => <ContactsListItem
+        key={item._id}
+        id={item._id}
+        firstName={item.firstName}
+        lastName={item.lastName}
+        onClick={() => {
+          selectContact(item._id)
+        }}
+      />
+    } else {
+      getListItem = (item) => <li></li>
+    }
 
     return (
       <div className="contacts-list">
@@ -51,15 +64,7 @@ export default class ContactsList extends React.Component {
                }/>
         <ul className="contacts-list__list">
           {this.state.displayed.map(item =>
-            <ContactsListItem
-              key={item._id}
-              id={item._id}
-              firstName={item.firstName}
-              lastName={item.lastName}
-              onClick={() => {
-                return actions.selectContact(item._id)
-              }}
-            />
+            getListItem(item)
           )}
         </ul>
       </div>

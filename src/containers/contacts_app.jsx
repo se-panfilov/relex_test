@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import * as ContactsActions from '../actions/contacts';
 import { ContactsList, ContactDetails } from '../components';
-import { getSelected } from '../reducers';
+// import { getSelected } from '../reducers';
 
 class ContactsApp extends React.Component {
   static propTypes = {
@@ -21,7 +21,7 @@ class ContactsApp extends React.Component {
       <div className="app">
         <h1>Contacts</h1>
         <ContactsList contacts={contacts} actions={actions}/>
-        <ContactDetails selected={selected} actions={actions}/>
+        {/*<ContactDetails selected={selected} actions={actions}/>*/}
       </div>
     );
   }
