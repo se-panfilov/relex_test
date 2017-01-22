@@ -17,7 +17,6 @@ class ContactsApp extends React.Component {
     const { contacts, selectedContact, dispatch } = this.props;
     const actions = bindActionCreators(ContactsActions, dispatch);
 
-    console.info(actions)
     return (
       <div className="app">
         <h1>Contacts</h1>
@@ -26,11 +25,10 @@ class ContactsApp extends React.Component {
           selected={selectedContact}
           actions={actions}
           onSave={
-            (v, e) => {
-              console.log(11111)
+            v => {
+              console.log('Start')
               console.info(v)
-              console.info(e)
-              console.log(11111)
+              console.log('End')
             }
           }
         />
