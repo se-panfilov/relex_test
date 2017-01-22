@@ -10,8 +10,8 @@ Contact.prototype.getNewId = function (arr) {
 
   // TODO (S.Panfilov) This would be sucks in case of async, but ok for test task
   const latestId = arr.sort((a, b) => b._id - a._id)[0]._id;
-  const time = +((new Date()).getTime().toString().slice(-5));
-  return +latestId + 1 + time;
+  const time = +((new Date()).getTime().toString().slice(-4));
+  return +latestId + time;
 };
 
 export default Contact

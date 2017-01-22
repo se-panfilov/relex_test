@@ -9,15 +9,13 @@ const reducer = combineReducers(reducers);
 const store = createStore(reducer);
 
 //Add Demo data
-import { addContact, getSelectedContact } from '../actions/contacts';
+import { addContact, selectContact } from '../actions/contacts';
 store.dispatch(addContact('Samuel', 'Colt'));
 store.dispatch(addContact('Gal', 'Uziel'));
 store.dispatch(addContact('John', 'Thompson'));
 store.dispatch(addContact('Mikhail', 'Kalashnikov'));
 store.dispatch(addContact('Gaston', 'Glock'));
 store.dispatch(addContact('Leon', 'Nagant'));
-store.dispatch(addContact('Leon', 'Nagant'));
-// console.info(store.dispatch(getSelectedContact()));
 //End of Demo data
 
 export default class App extends React.Component {

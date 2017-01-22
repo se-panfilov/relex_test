@@ -49,6 +49,7 @@ export default class ContactDetails extends React.Component {
     }
 
     let getInput = (name, selected) => {
+
       if (selected) {
         return <input type="text"
                       value={selected[name]}

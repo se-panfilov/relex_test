@@ -15,14 +15,15 @@ class ContactsApp extends React.Component {
   };
 
   render () {
-    const { contacts, selected, dispatch } = this.props;
+    const { contacts, selectedContact, dispatch } = this.props;
     const actions = bindActionCreators(ContactsActions, dispatch);
 
+    console.warn(this.props.selectedContact)
     return (
       <div className="app">
         <h1>Contacts</h1>
         <ContactsList contacts={contacts} actions={actions}/>
-        <ContactDetails selected={selected} actions={actions}/>
+        <ContactDetails selected={selectedContact} actions={actions}/>
       </div>
     );
   }
@@ -42,13 +43,13 @@ class ContactsApp extends React.Component {
 // };
 
 export default connect(state => {
-  console.info(state.contacts)
+  // console.info(state.contacts)
   // console.info(getSelected())
-  console.info(getSelectedContact(state.contacts))
+  // console.info(getSelectedContact(state.contacts))
   return {
     contacts: state.contacts.contacts,
     // mapDispatchToProps
-    selectedContact: getSelectedContact(state)
+    selectedContact: getSelectedContact(state.contacts)
     // selected: state.contacts.selected
     // contacts: state.contacts
   }

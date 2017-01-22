@@ -1,7 +1,6 @@
 import {
   ADD_CONTACT,
   SELECT_CONTACT,
-  // GET_SELECT_CONTACT,
   REMOVE_CONTACT
 } from '../constants/action_types';
 
@@ -26,9 +25,3 @@ export function removeContact (id) {
     id
   };
 }
-
-// export function getSelectedContact () {
-//   return {
-//     type: GET_SELECT_CONTACT
-//   };
-// }
