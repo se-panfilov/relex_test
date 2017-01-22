@@ -10,19 +10,20 @@ export default class ContactDetails extends React.Component {
   static propTypes = {
     // selected: PropTypes.object.isRequired,
     selected: PropTypes.object,
-    actions: PropTypes.object.isRequired
+    actions: PropTypes.object.isRequired,
+    onSave: PropTypes.func
   };
 
   state = {
-    editing: false
+    editing: false,
+    data: {
+      firstName: (this.props.selected) ? this.props.selected.firstName : null,
+      lastName: (this.props.selected) ? this.props.selected.lastName : null,
+    }
   };
 
   onInputChange (fieldName, event) {
-
-  }
-
-  onClick (fieldName, event) {
-    console.info(this.props.selected)
+    this.state.data[fieldName] = event.target.value
   }
 
   render () {
@@ -31,20 +32,22 @@ export default class ContactDetails extends React.Component {
 
     let submitBtn;
     if (this.state.editing) {
-      submitBtn = <button type="submit"
-                          onClick={e => {
-                            e.preventDefault();
-                            this.onClick('remove');
-                          }}
-      >Remove
-      </button>
+      // submitBtn = <button type="submit"
+      //                     onClick={e => {
+      //                       e.preventDefault();
+      //                       this.props.onClick('remove');
+      //                     }}
+      {/*>Remove*/
+      }
+      {/*</button>*/
+      }
     } else {
       submitBtn = <button type="submit"
                           onClick={e => {
                             e.preventDefault();
-                            this.onClick('add');
+                            this.props.onSave('save', this.state.data);
                           }}
-      >Add
+      >Save
       </button>
     }
 
@@ -52,9 +55,8 @@ export default class ContactDetails extends React.Component {
 
       if (selected) {
         return <input type="text"
-                      value={selected[name]}
-                      onChange={this.onInputChange(name)}
-                      readOnly="readOnly"
+                      defaultValue={selected[name]}
+                      onChange={(e) => this.onInputChange(name, e)}
         />
       }
       return null
