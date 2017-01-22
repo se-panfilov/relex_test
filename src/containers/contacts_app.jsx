@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as ContactsActions from '../actions/contacts';
 import { ContactsList, ContactDetails } from '../components';
 // import { getSelected } from '../reducers';
+import { getSelectedContact } from '../reducers/contact_reducer';
 
 class ContactsApp extends React.Component {
   static propTypes = {
@@ -26,13 +27,40 @@ class ContactsApp extends React.Component {
     );
   }
 }
+//
+// const mapStateToProps = (state) => {
+//   return {
+//     selectedContact: getSelectedContact(state)
+//   }
+// };
+//
+// const mapDispatchToProps = (dispatch) => {
+//   return bindActionCreators({
+//     contacts: state.contacts.contacts,
+//     selectedContact
+//   }, dispatch)
+// };
 
 export default connect(state => {
-  // console.info(state)
+  console.info(state.contacts)
   // console.info(getSelected())
+  console.info(getSelectedContact(state.contacts))
   return {
     contacts: state.contacts.contacts,
-    selected: state.contacts.selected
+    // mapDispatchToProps
+    selectedContact: getSelectedContact(state)
+    // selected: state.contacts.selected
     // contacts: state.contacts
   }
 })(ContactsApp);
+//
+// function isMaxHistoryReached(state) {
+//   return state.search.history === 10;
+// }
+//
+// function mapStateToProps(state) {
+//   return {
+//     searchHasMaxHistory: isMaxHistoryReached.bind(ContactsApp, state)
+//   };
+// }
+// connect(mapStateToProps)(ContactsApp);
