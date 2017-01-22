@@ -8,7 +8,8 @@ import ContactsListItem from './contacts_list_item';
 
 export default class ContactDetails extends React.Component {
   static propTypes = {
-    selected: PropTypes.object.isRequired,
+    // selected: PropTypes.object.isRequired,
+    selected: PropTypes.object,
     actions: PropTypes.object.isRequired
   };
 
@@ -28,41 +29,44 @@ export default class ContactDetails extends React.Component {
     const { selected, dispatch } = this.props;
     // const actions = bindActionCreators(ContactsActions, dispatch);
 
-    let element;
+    let submitBtn;
     if (this.state.editing) {
-      element = <button type="submit"
-                        onClick={e => {
-                          e.preventDefault();
-                          this.onClick('remove');
-                        }}
+      submitBtn = <button type="submit"
+                          onClick={e => {
+                            e.preventDefault();
+                            this.onClick('remove');
+                          }}
       >Remove
       </button>
     } else {
-      element = <button type="submit"
-                        onClick={e => {
-                          e.preventDefault();
-                          this.onClick('add');
-                        }}
+      submitBtn = <button type="submit"
+                          onClick={e => {
+                            e.preventDefault();
+                            this.onClick('add');
+                          }}
       >Add
       </button>
     }
+
+    let getInput = (name, selected) => {
+      if (selected) {
+        return <input type="text"
+                      value={selected[name]}
+                      onChange={this.onInputChange(name)}
+                      readOnly="readOnly"
+        />
+      }
+      return null
+    };
 
     return (
       <div className="contacts-details">
         <form name="contact-details-form"
               id="contact-details-form"
               className="contacts-details__form">
-          <input type="text"
-                 value={selected.firstName}
-                 onChange={this.onInputChange('firstName')}
-                 readOnly="readOnly"
-          />
-          <input type="text"
-                 value={selected.lastName}
-                 onChange={this.onInputChange('lastName')}
-                 readOnly="readOnly"
-          />
-          {element}
+          {getInput('firstName', selected)}
+          {getInput('lastName', selected)}
+          {submitBtn}
         </form>
       </div>
     );

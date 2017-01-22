@@ -9,12 +9,12 @@ import Contact from './Contact'
 const initialState = {
   // _selectedId: null, // TODO (S.Panfilov)revert null
   _selectedId: 2,
-  get selected () {// TODO (S.Panfilov) redo this (take a look at shopping-cart example)
-    console.info(123213)
-    // TODO (S.Panfilov) perhaps it's a bad place for getter
-    if (!this._selectedId && this._selectedId !== 0) return null;
-    return (this.contacts.filter(v => v._id === this._selectedId))[0];
-  },
+  // get selected () {// TODO (S.Panfilov) redo this (take a look at shopping-cart example)
+  //   console.info(123213)
+  //   // TODO (S.Panfilov) perhaps it's a bad place for getter
+  //   if (!this._selectedId && this._selectedId !== 0) return null;
+  //   return (this.contacts.filter(v => v._id === this._selectedId))[0];
+  // },
   contacts: []
 };
 

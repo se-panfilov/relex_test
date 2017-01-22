@@ -21,7 +21,7 @@ class ContactsApp extends React.Component {
       <div className="app">
         <h1>Contacts</h1>
         <ContactsList contacts={contacts} actions={actions}/>
-        {/*<ContactDetails selected={selected} actions={actions}/>*/}
+        <ContactDetails selected={selected} actions={actions}/>
       </div>
     );
   }

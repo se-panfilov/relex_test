@@ -50,8 +50,6 @@ export default class ContactsList extends React.Component {
           selectContact(item._id)
         }}
       />
-    } else {
-      getListItem = (item) => <li></li>
     }
 
     return (
