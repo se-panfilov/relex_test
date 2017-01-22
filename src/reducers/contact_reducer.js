@@ -4,6 +4,8 @@ import {
   REMOVE_CONTACT
 } from '../constants/action_types';
 
+import Contact from './Contact'
+
 const initialState = {
   // _selectedId: null, // TODO (S.Panfilov)revert null
   _selectedId: 2,
@@ -13,14 +15,7 @@ const initialState = {
     if (!this._selectedId && this._selectedId !== 0) return null;
     return (this.contacts.filter(v => v._id === this._selectedId))[0];
   },
-  contacts: [
-    { _id: 1, firstName: 'Samuel', lastName: 'Colt' },
-    { _id: 2, firstName: 'Gal', lastName: 'Uziel' },
-    { _id: 3, firstName: 'John', lastName: 'Thompson' },
-    { _id: 4, firstName: 'Mikhail', lastName: 'Kalashnikov' },
-    { _id: 5, firstName: 'Gaston', lastName: 'Glock' },
-    { _id: 6, firstName: 'Leon', lastName: 'Nagant' }
-  ]
+  contacts: []
 };
 
 const actions = {
@@ -29,6 +24,8 @@ const actions = {
     return state;
   },
   [SELECT_CONTACT] ({ id }, state) {
+    console.info('SELECT_CONTACT');
+    console.info(this);
     if (state.contacts.filter(v => v._id === id).length < 1) throw 'selectContact: unknown id';
     state._selectedId = id;
     return state;
@@ -52,19 +49,3 @@ export default function (state = initialState, action) {
 //   return (state.contacts.filter(v => v._id === state._selectedId))[0];
 //   // return state.selected
 // };
-
-function Contact (firstName, lastName, contactsArr) {
-  if (!firstName && !lastName) throw 'new Contact: firstName or lastName must be specified';
-  this._id = this.getNewId(contactsArr);
-  this.firstName = firstName;
-  this.lastName = lastName;
-}
-
-Contact.prototype.getNewId = function (arr) {
-  if (arr.length === 0) return 0;
-
-  // TODO (S.Panfilov) This would be sucks in case of async, but ok for test task
-  const latestId = arr.sort((a, b) => b._id - a._id)[0]._id;
-  const time = +((new Date()).getTime().toString().slice(-5));
-  return +latestId + 1 + time;
-};
