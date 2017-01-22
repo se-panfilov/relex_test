@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import * as ContactsActions from '../actions/contacts';
 import { ContactsList, ContactDetails } from '../components';
+import { getSelected } from '../reducers';
 
 class ContactsApp extends React.Component {
   static propTypes = {
@@ -17,17 +18,21 @@ class ContactsApp extends React.Component {
     const actions = bindActionCreators(ContactsActions, dispatch);
 
     return (
-    <div className="app">
-      <h1>Contacts</h1>
-      <ContactsList contacts={contacts} actions={actions}/>
-      <ContactDetails selected={selected} actions={actions}/>
-    </div>
+      <div className="app">
+        <h1>Contacts</h1>
+        <ContactsList contacts={contacts} actions={actions}/>
+        <ContactDetails selected={selected} actions={actions}/>
+      </div>
     );
   }
 }
 
-export default connect(state => ({
-  contacts: state.contacts.contacts,
-  selected: state.contacts.selected
-  // contacts: state.contacts
-}))(ContactsApp);
+export default connect(state => {
+  // console.info(state)
+  // console.info(getSelected())
+  return {
+    contacts: state.contacts.contacts,
+    selected: state.contacts.selected
+    // contacts: state.contacts
+  }
+})(ContactsApp);

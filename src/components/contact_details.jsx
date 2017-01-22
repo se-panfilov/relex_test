@@ -21,7 +21,7 @@ export default class ContactDetails extends React.Component {
   }
 
   onClick (fieldName, event) {
-
+    console.info(this.props.selected)
   }
 
   render () {

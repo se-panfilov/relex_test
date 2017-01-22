@@ -5,7 +5,7 @@ export default class ContactsListItem extends React.Component {
     id: PropTypes.number.isRequired,
     firstName: PropTypes.string.isRequired,
     lastName: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func
   };
 
   render () {

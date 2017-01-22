@@ -5,9 +5,10 @@ import {
 } from '../constants/action_types';
 
 const initialState = {
-  // _selectedId: null,
+  // _selectedId: null, // TODO (S.Panfilov)revert null
   _selectedId: 2,
   get selected () {// TODO (S.Panfilov) redo this (take a look at shopping-cart example)
+    console.info(123213)
     // TODO (S.Panfilov) perhaps it's a bad place for getter
     if (!this._selectedId && this._selectedId !== 0) return null;
     return (this.contacts.filter(v => v._id === this._selectedId))[0];
@@ -45,8 +46,15 @@ export default function (state = initialState, action) {
   return actions[action.type](action, newState);
 }
 
+// export const getSelected = (state = initialState) => {
+//   // if(!state) return
+//   if (!state._selectedId && state._selectedId !== 0) return null;
+//   return (state.contacts.filter(v => v._id === state._selectedId))[0];
+//   // return state.selected
+// };
+
 function Contact (firstName, lastName, contactsArr) {
-  if (!firstName && !lastName) throw 'new Contact: No firstName or lastName';
+  if (!firstName && !lastName) throw 'new Contact: firstName or lastName must be specified';
   this._id = this.getNewId(contactsArr);
   this.firstName = firstName;
   this.lastName = lastName;
