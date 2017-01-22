@@ -13,8 +13,8 @@ export default class ContactsList extends React.Component {
   };
 
   render () {
-    const { contacts, dispatch } = this.props;
-    // const actions = bindActionCreators(ContactsActions, dispatch);
+    const { contacts, dispatch, actions } = this.props;
+    const { selectContact } = actions;
 
     return (
       <div className="contacts-list">
@@ -25,7 +25,10 @@ export default class ContactsList extends React.Component {
               id={item._id}
               firstName={item.firstName}
               lastName={item.lastName}
-              />
+              onClick={() => {
+                return actions.selectContact(item._id)
+              }}
+            />
           )}
         </ul>
       </div>

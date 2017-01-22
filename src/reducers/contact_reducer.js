@@ -7,10 +7,7 @@ import {
 const initialState = {
   // _selectedId: null,
   _selectedId: 2,
-  set selectedId (id) {// TODO (S.Panfilov) redo this (take a look at shopping-cart example)
-    this._selectedId = id;
-  },
-  get selected () {
+  get selected () {// TODO (S.Panfilov) redo this (take a look at shopping-cart example)
     // TODO (S.Panfilov) perhaps it's a bad place for getter
     if (!this._selectedId && this._selectedId !== 0) return null;
     return (this.contacts.filter(v => v._id === this._selectedId))[0];
@@ -27,38 +24,30 @@ const initialState = {
 
 const actions = {
   [ADD_CONTACT] ({ firstName, lastName }, state) {
-    // TODO (S.Panfilov)check for immutable
     state.contacts = state.contacts.concat(new Contact(firstName, lastName, state.contacts));
-
     return state;
   },
   [SELECT_CONTACT] ({ id }, state) {
-    // const newState = Object.assign({}, state);
     if (state.contacts.filter(v => v._id === id).length < 1) throw 'selectContact: unknown id';
-    // state._selectedId = id;
-    state.selectedId = id;
-
+    state._selectedId = id;
     return state;
   },
   [REMOVE_CONTACT] ({ id }, state) {
-    // const newState = Object.assign({}, state);
     state.contacts = state.contacts.filter(v => v._id !== id);
-    if (state._selectedId === id) state._selectedId = null;// TODO (S.Panfilov) set selected
-
+    if (state._selectedId === id) state._selectedId = null;
     return state;
   }
 };
 
 export default function (state = initialState, action) {
-  if (!Object.keys(actions).hasOwnProperty(action.type)) return state;
+  if (!actions.hasOwnProperty(action.type)) return state;
   const newState = Object.assign({}, state);
-  return actions[action.type](actions, newState);
+  return actions[action.type](action, newState);
 }
 
 function Contact (firstName, lastName, contactsArr) {
-  // TODO (S.Panfilov)add  checks here for mandatory fields
+  if (!firstName && !lastName) throw 'new Contact: No firstName or lastName';
   this._id = this.getNewId(contactsArr);
-  // TODO (S.Panfilov)perhaps init set/get
   this.firstName = firstName;
   this.lastName = lastName;
 }

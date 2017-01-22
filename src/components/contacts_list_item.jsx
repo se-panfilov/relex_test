@@ -4,13 +4,20 @@ export default class ContactsListItem extends React.Component {
   static propTypes = {
     id: PropTypes.number.isRequired,
     firstName: PropTypes.string.isRequired,
-    lastName: PropTypes.string.isRequired
+    lastName: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired
   };
 
   render () {
     return (
       <li className="contacts-list__list-item">
-        <span className="contacts-list__item-text">{this.props.firstName} {this.props.lastName}</span>
+        <a href="#"
+           className="contacts-list__item-text"
+           onClick={e => {
+             e.preventDefault();
+             this.props.onClick()
+           }}
+        >{this.props.firstName} {this.props.lastName}</a>
       </li>
     );
   }
