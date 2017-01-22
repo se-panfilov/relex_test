@@ -26,9 +26,8 @@ class ContactsApp extends React.Component {
           actions={actions}
           onSave={
             v => {
-              console.log('Start')
-              console.info(v)
-              console.log('End')
+              console.log('onSave')
+              actions.editContact(v._id, v.firstName, v.lastName)
             }
           }
         />
@@ -38,7 +37,6 @@ class ContactsApp extends React.Component {
 }
 
 export default connect(state => {
-  // console.info(state.contacts)
   return {
     contacts: state.contacts.contacts,
     selectedContact: getSelectedContact(state.contacts)

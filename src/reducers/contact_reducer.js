@@ -1,5 +1,6 @@
 import {
   ADD_CONTACT,
+  EDIT_CONTACT,
   SELECT_CONTACT,
   REMOVE_CONTACT
 } from '../constants/action_types';
@@ -16,8 +17,26 @@ const actions = {
     state.contacts = state.contacts.concat(new Contact(firstName, lastName, state.contacts));
     return state;
   },
+  [EDIT_CONTACT] ({ id, firstName, lastName }, state) {
+    // TODO (S.Panfilov)check for unknown id error
+
+    let index;// TODO (S.Panfilov)check index
+    const contact = state.contacts.filter((v, i) => {
+      const result = v._id === id;
+      if (result) index = i;
+      return result
+    })[0];
+
+    if (!contact) throw 'EDIT_CONTACT: unknown Id';
+
+    // const index = state.contacts.findIndex(v => v._id === contact._id);
+    if (firstName) state.contacts[index].firstName = firstName;
+    if (lastName) state.contacts[index].firstName = lastName;
+
+    return state;
+  },
   [SELECT_CONTACT] ({ id }, state) {
-    if (state.contacts.filter(v => v._id === id).length < 1) throw 'selectContact: unknown id';
+    if (state.contacts.filter(v => v._id === id).length < 1) throw 'SELECT_CONTACT: unknown id';
     state._selectedId = id;
     return state;
   },
@@ -30,7 +49,7 @@ const actions = {
 
 export default function (state = initialState, action) {
   if (!actions.hasOwnProperty(action.type)) return state;
-  const newState = Object.assign({}, state);
+  const newState = Object.assign({}, state);// now we're able to modify state in methods below
   return actions[action.type](action, newState);
 }
 
