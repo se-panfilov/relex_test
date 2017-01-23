@@ -92,7 +92,7 @@ export default class ContactsList extends React.Component {
       },
       list: {
         margin: 0,
-        padding: 0
+        padding: '0 15px'
       }
     };
 

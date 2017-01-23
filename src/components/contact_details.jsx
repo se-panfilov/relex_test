@@ -84,7 +84,8 @@ export default class ContactDetails extends React.Component {
         cursor: 'pointer',
         backgroundImage: 'none',
         border: '1px solid #ccc',
-        borderRadius: '4px'
+        borderRadius: '4px',
+        margin: '3px'
       }
     };
 
