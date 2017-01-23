@@ -18,7 +18,6 @@ export default class ContactsList extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const newState = Object.assign({}, this.state);
-    // newState.displayed = nextProps.contacts.slice();
     newState.displayed = this.getFilteredList(nextProps.contacts, this.state.filter);
 
     this.setState(newState);
