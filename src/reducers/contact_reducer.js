@@ -31,7 +31,7 @@ const actions = {
 
     // const index = state.contacts.findIndex(v => v._id === contact._id);
     if (firstName) state.contacts[index].firstName = firstName;
-    if (lastName) state.contacts[index].firstName = lastName;
+    if (lastName) state.contacts[index].lastName = lastName;
 
     return state;
   },
@@ -47,9 +47,18 @@ const actions = {
   }
 };
 
+function createStateCopy (state) {
+  //It's better to use deep cloning here, but I'm too old for this shit)))
+  const newState = Object.assign({}, state);
+  //type for objects and arrays
+  newState.contacts = state.contacts.slice();
+  return newState;
+}
+
 export default function (state = initialState, action) {
   if (!actions.hasOwnProperty(action.type)) return state;
-  const newState = Object.assign({}, state);// now we're able to modify state in methods below
+  const newState = createStateCopy(state);
+  // now we're able to modify state in methods below
   return actions[action.type](action, newState);
 }
 

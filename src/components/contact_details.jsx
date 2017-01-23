@@ -2,6 +2,12 @@ import React, { PropTypes } from 'react';
 // import styles from './ContactsDetails.css';
 
 export default class ContactDetails extends React.Component {
+  static propTypes = { // TODO (S.Panfilov)fix isRequired
+    selected: PropTypes.object,
+    actions: PropTypes.object.isRequired,
+    onSave: PropTypes.func
+  };
+
   constructor (props) {
     super(props);
 
@@ -11,18 +17,10 @@ export default class ContactDetails extends React.Component {
     };
   }
 
-  static propTypes = { // TODO (S.Panfilov)fix isRequired
-    selected: PropTypes.object,
-    actions: PropTypes.object.isRequired,
-    onSave: PropTypes.func
-  };
-
   onInputChange (fieldName, event) {
-    this.setState({
-      data: {
-        [fieldName]: event.target.value
-      }
-    });
+    const newState = Object.assign({}, this.state);
+    newState.data[fieldName] = event.target.value;
+    this.setState(newState);
   }
 
   componentWillReceiveProps (nextProps) {
@@ -32,7 +30,7 @@ export default class ContactDetails extends React.Component {
     for (const fieldName in selectedProp) {
       if (selectedProp.hasOwnProperty(fieldName)) {
         if (selectedProp[fieldName] !== this.state.data[fieldName]) {
-          newState.data[fieldName] = selectedProp[fieldName]
+          newState.data[fieldName] = selectedProp[fieldName];
         }
       }
     }

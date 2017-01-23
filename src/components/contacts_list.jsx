@@ -20,6 +20,19 @@ export default class ContactsList extends React.Component {
     };
   }
 
+  componentWillReceiveProps (nextProps) {
+    const nextContacts = nextProps.contacts;
+    const newState = Object.assign({}, this.state);
+
+    for (const fieldName in nextContacts) {
+      if (nextContacts.hasOwnProperty(fieldName)) {
+        newState[fieldName] = nextContacts[fieldName];
+      }
+    }
+
+    this.setState(newState);
+  }
+
   onInputChange (e) {
 
     const newDisplayed = this.props.contacts.filter(v => {
@@ -35,13 +48,9 @@ export default class ContactsList extends React.Component {
     })
   };
 
-  render () {
-    const { contacts, dispatch, actions } = this.props;
-    const { selectContact } = actions;
-
-    let getListItem;
+  getListItem (item, contacts, selectContact) {
     if (contacts && contacts.length > 0) {
-      getListItem = (item) => <ContactsListItem
+      return <ContactsListItem
         key={item._id}
         id={item._id}
         firstName={item.firstName}
@@ -51,6 +60,11 @@ export default class ContactsList extends React.Component {
         }}
       />
     }
+  };
+
+  render () {
+    const { contacts, dispatch, actions } = this.props;
+    const { selectContact } = actions;
 
     return (
       <div className="contacts-list">
@@ -62,7 +76,7 @@ export default class ContactsList extends React.Component {
                }/>
         <ul className="contacts-list__list">
           {this.state.displayed.map(item =>
-            getListItem(item)
+            this.getListItem(item, contacts, selectContact)
           )}
         </ul>
       </div>

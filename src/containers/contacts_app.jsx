@@ -13,10 +13,26 @@ class ContactsApp extends React.Component {
     dispatch: PropTypes.func.isRequired
   };
 
+  // componentWillReceiveProps (nextProps) {
+  //   console.info('C-App')
+  //   console.info(nextProps.contacts)
+    // const nextContacts = nextProps.contacts;
+    // const newState = Object.assign({}, this.state);
+    //
+    // for (const fieldName in nextContacts) {
+    //   if (nextContacts.hasOwnProperty(fieldName)) {
+    //     newState[fieldName] = nextContacts[fieldName];
+    //   }
+    // }
+    //
+    // this.setState(newState);
+  // }
+
   render () {
     const { contacts, selectedContact, dispatch } = this.props;
     const actions = bindActionCreators(ContactsActions, dispatch);
 
+    console.info(contacts)
     return (
       <div className="app">
         <h1>Contacts</h1>
