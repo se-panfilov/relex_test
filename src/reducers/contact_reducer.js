@@ -69,19 +69,30 @@ function isStringOrNotExist(val) {
 }
 
 function createStateCopy(state) {
+  if (!state) throw 'createStateCopy: no state provided';
   const newState = Object.assign({}, state);
   //Avoid to create shallow copy of an array here
   newState.contacts = state.contacts.map(a => Object.assign({}, a));
   return newState;
 }
 
-export default function(state = initialState, action) {
+export default function main(state = initialState, action) {
   if (!actions.hasOwnProperty(action.type)) return state;
   // now we're able to modify state in methods below
   return actions[action.type](action, createStateCopy(state));
 }
 
 export const getSelectedContact = (state) => {
+  if (!state) throw 'getSelectedContact: no state provided';
   if (!state._selectedId && state._selectedId !== 0) return null;
   return (state.contacts.filter(v => v._id === state._selectedId))[0];
 };
+
+//EXPORTS for test purpose, shouldn't be present in production
+export const _p = {
+  isStringOrNotExist,
+  createStateCopy,
+  main,
+  getSelectedContact
+};
+//END test exports

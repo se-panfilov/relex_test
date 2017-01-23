@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import reducer from '../../src/reducers/contact_reducer';
+import { _p } from '../../src/reducers/contact_reducer';
 
 import {
   ADD_CONTACT,
@@ -16,11 +17,6 @@ import {
 } from '../../src/actions/contacts';
 
 describe('contact reducer:', () => {
-  it('should handle initial state', () => {
-    expect(
-      reducer(undefined, {})
-    ).to.deep.equal({ _selectedId: null, contacts: [] })
-  });
 
   describe('Add Contact:', () => {
     let state;
@@ -335,21 +331,132 @@ describe('contact reducer:', () => {
       expect(stateTwo._selectedId).to.be.null;
     });
 
-    // TODO (S.Panfilov)
-    // it('check removeContact to return new state object', () => {
-    //   const newState = reducer(state, removeContact(entities.one._id));
-    //   expect(newState._selectedId).to.equal(entities.one._id);
-    //   expect(state._selectedId).to.be.null;
-    // });
+    it('check removeContact to return new state object', () => {
+      const newState = reducer(state, removeContact(entities.one._id));
+      expect(newState.contacts.length).to.equal(1);
+      expect(state.contacts.length).to.equal(2);
+    });
 
     it('can\'t remove contact with unknown Id', () => {
       const badId = 6666666;
       expect(() => reducer(state, removeContact(badId))).to.throw(`${REMOVE_CONTACT}: unknown Id: ${badId}`);
     });
 
-    it('can\' remove contact without Id ', () => {
+    it('can\'t remove contact without Id ', () => {
       expect(() => reducer(state, removeContact())).to.throw(`${REMOVE_CONTACT}: no Id provided`);
     });
+
+  });
+  describe('Private functions:', () => {
+
+    describe('isStringOrNotExist:', () => {
+      it('check is string', () => {
+        expect(_p.isStringOrNotExist('some')).to.be.true;
+        expect(_p.isStringOrNotExist('0')).to.be.true;
+        expect(_p.isStringOrNotExist('')).to.be.true;
+        expect(_p.isStringOrNotExist((1).toString())).to.be.true;
+        expect(_p.isStringOrNotExist(new String())).to.be.true;
+      });
+
+      it('check is not exist', () => {
+        expect(_p.isStringOrNotExist(null)).to.be.true;
+        expect(_p.isStringOrNotExist(undefined)).to.be.true;
+        expect(_p.isStringOrNotExist()).to.be.true;
+      });
+
+      it('check is not a string', () => {
+        expect(_p.isStringOrNotExist(+'123')).to.be.false;
+        expect(_p.isStringOrNotExist({})).to.be.false;
+        expect(_p.isStringOrNotExist([])).to.be.false;
+        expect(_p.isStringOrNotExist(123123)).to.be.false;
+        expect(_p.isStringOrNotExist(0)).to.be.false;
+        expect(_p.isStringOrNotExist(Infinity)).to.be.false;
+      });
+
+    });
+
+    describe('createStateCopy:', () => {
+
+      it('check is create new object', () => {
+        const state = { _selectedId: null, contacts: [{ _id: 111, firstName: 'qqq', lastName: 'www' }] };
+        const newState = _p.createStateCopy(state);
+
+        newState.contacts.push({ _id: 222, firstName: 'eee', lastName: 'rrr' });
+
+        expect(state.contacts.length).to.equal(1);
+        expect(newState.contacts.length).to.equal(2);
+
+        state.contacts[0].firstName = 'rrr';
+
+        expect(state.contacts[0].firstName).to.equal('rrr');
+        expect(newState.contacts[0].firstName).to.equal('qqq');
+      });
+
+      it('can\'t create state from void', () => {
+        expect(() => _p.createStateCopy()).to.throw(`createStateCopy: no state provided`);
+      });
+
+    });
+
+    describe('getSelectedContact:', () => {
+
+      it('can return selected object', () => {
+        const originalEntity = {
+          firstName: 'John',
+          lastName: 'Smith',
+          _id: null
+        };
+
+        let state = { _selectedId: null, contacts: [] };
+        const stateOne = reducer(state, addContact(originalEntity.firstName, originalEntity.lastName));
+        const stateTwo = reducer(stateOne, selectContact(stateOne.contacts[0]._id));
+        originalEntity._id = stateTwo.contacts[0]._id;
+        state = stateTwo;
+
+        expect(state._selectedId).to.equal(stateTwo.contacts[0]._id);
+
+        const result = _p.getSelectedContact(state);
+        expect(result).to.be.deep.equal(state.contacts[0]);
+      });
+
+
+      it('can return null when nothing selected', () => {
+        const originalEntity = {
+          firstName: 'John',
+          lastName: 'Smith',
+          _id: null
+        };
+
+        let state = { _selectedId: null, contacts: [] };
+        const newState = reducer(state, addContact(originalEntity.firstName, originalEntity.lastName));
+        originalEntity._id = newState.contacts[0]._id;
+        state = newState;
+
+        expect(state._selectedId).to.be.null;
+
+        const result = _p.getSelectedContact(state);
+        expect(result).to.be.null;
+      });
+
+      it('can\'t create state from void', () => {
+        expect(() => _p.getSelectedContact()).to.throw(`getSelectedContact: no state provided`);
+      });
+
+    });
+
+    describe('main:', () => {
+      it('should handle initial state', () => {
+        expect(reducer(undefined, {})).to.deep.equal({ _selectedId: null, contacts: [] })
+      });
+
+      it('should return state when unknown action type', () => {
+        const state = { _selectedId: null, contacts: [] };
+        const action = {type: 'some'};
+        expect(reducer(state, action)).to.deep.equal(state)
+      });
+
+    });
+
 
   });
 // TODO (S.Panfilov) add checks in case of id===0
