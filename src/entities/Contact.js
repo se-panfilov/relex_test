@@ -1,17 +1,14 @@
-function Contact (firstName, lastName, contactsArr) {
+function Contact (firstName, lastName) {
   if (!firstName && !lastName) throw 'new Contact: firstName or lastName must be specified';
-  this._id = this.getNewId(contactsArr);
+  this._id = this.getNewId();
   this.firstName = firstName;
   this.lastName = lastName;
 }
 
-Contact.prototype.getNewId = function (arr) {
-  if (arr.length === 0) return 0;
-
-  // TODO (S.Panfilov) This would be sucks in case of async, but ok for test task
-  const latestId = arr.sort((a, b) => b._id - a._id)[0]._id;
-  const time = +((new Date()).getTime().toString().slice(-4));
-  return +latestId + time;
+Contact.prototype.getNewId = function () {
+  const random = Math.floor((1 + Math.random()) * 0x10000).toString();
+  const time = ((new Date()).getTime().toString().slice(-4)).toString();
+  return +(random + time);
 };
 
-export default Contact
+export default Contact;
