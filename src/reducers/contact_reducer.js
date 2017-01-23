@@ -22,9 +22,17 @@ const actions = {
     return state;
   },
   [EDIT_CONTACT]({ id, firstName, lastName }, state) {
+    // // const newState = Object.assign({}, state)
+    // const newState = {}
+    // newState.contacts = []
+    // newState.contacts.push({ firstName: firstName })
+    // // newState.contacts[0].firstName = firstName
+    // return newState
     if (!isStringOrNotExist(firstName) || !isStringOrNotExist(lastName)) {
       throw `${EDIT_CONTACT}: firstName or lastName shall be Sting or null`;
     }
+
+    if (!firstName && !lastName) throw `${EDIT_CONTACT}: no data passed`;
 
     let index;
     const contact = state.contacts.filter((v, i) => {
@@ -38,7 +46,6 @@ const actions = {
     if (firstName) state.contacts[index].firstName = firstName;
     if (lastName) state.contacts[index].lastName = lastName;
 
-    if (!firstName && !lastName) throw `${EDIT_CONTACT}: no data passed`;
     return state;
   },
   [SELECT_CONTACT]({ id }, state) {
@@ -64,18 +71,16 @@ function isStringOrNotExist(val) {
 }
 
 function createStateCopy(state) {
-  //It's better to use deep cloning here, but I'm too old for this shit)))
   const newState = Object.assign({}, state);
-  //type for objects and arrays
-  newState.contacts = state.contacts.slice();
+  //Avoid to create shallow copy of an array here
+  newState.contacts = state.contacts.map(a => Object.assign({}, a));
   return newState;
 }
 
 export default function(state = initialState, action) {
   if (!actions.hasOwnProperty(action.type)) return state;
-  const newState = createStateCopy(state);
   // now we're able to modify state in methods below
-  return actions[action.type](action, newState);
+  return actions[action.type](action, createStateCopy(state));
 }
 
 export const getSelectedContact = (state) => {

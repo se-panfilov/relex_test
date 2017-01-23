@@ -35,7 +35,6 @@ describe('contact reducer:', () => {
       state = { _selectedId: null, contacts: [] };
     });
 
-    // TODO (S.Panfilov) check return new state
     it('check add contact don\'t affect selectedId', () => {
       const state = { _selectedId: null, contacts: [] };
       const newState = reducer(state, addContact(firstName, lastName));
@@ -51,7 +50,23 @@ describe('contact reducer:', () => {
       expect(newState.contacts.length).to.equal(1);
       expect(newContact.firstName).to.equal(firstName);
       expect(newContact.lastName).to.equal(lastName);
-      expect(newContact._id).to.be.a('number')
+      expect(newContact._id).to.be.a('number');
+    });
+
+    it('check addContact to return new state object', () => {
+      const state = { _selectedId: null, contacts: [] };
+      const newState = reducer(state, addContact(firstName, lastName));
+
+      const newContact = newState.contacts[0];
+
+      expect(newState.contacts.length).to.equal(1);
+      expect(newState._selectedId).to.be.null;
+      expect(newContact.firstName).to.equal(firstName);
+      expect(newContact.lastName).to.equal(lastName);
+      expect(newContact._id).to.be.a('number');
+
+      expect(state.contacts.length).to.equal(0);
+      expect(state._selectedId).to.be.null;
     });
 
     it('can add new contact with first name only', () => {
@@ -63,7 +78,7 @@ describe('contact reducer:', () => {
       expect(newState.contacts.length).to.equal(1);
       expect(newContact.firstName).to.equal(firstName);
       expect(newContact.lastName).to.be.undefined;
-      expect(newContact._id).to.be.a('number')
+      expect(newContact._id).to.be.a('number');
     });
 
     it('can add new contact with last name only', () => {
@@ -75,7 +90,7 @@ describe('contact reducer:', () => {
       expect(newState.contacts.length).to.equal(1);
       expect(newContact.firstName).to.be.null;
       expect(newContact.lastName).to.equal(lastName);
-      expect(newContact._id).to.be.a('number')
+      expect(newContact._id).to.be.a('number');
     });
 
     it('can\'t add without first and last names', () => {
@@ -92,7 +107,7 @@ describe('contact reducer:', () => {
       expect(newContact.firstName).to.equal(firstName);
       expect(newContact.lastName).to.equal(lastName);
       expect(newContact._id).to.be.a('number');
-      expect(Object.keys(newContact).length).to.equal(3)
+      expect(Object.keys(newContact).length).to.equal(3);
     });
 
     it('can\t add new contact with non-string values', () => {
@@ -102,7 +117,6 @@ describe('contact reducer:', () => {
   });
 
   describe('Edit Contact:', () => {
-    // TODO (S.Panfilov) check return new state
     let state;
     const originalEntity = {
       firstName: 'John',
@@ -136,7 +150,26 @@ describe('contact reducer:', () => {
       expect(newState.contacts.length).to.equal(1);
       expect(newContact.firstName).to.equal(newFirstName);
       expect(newContact.lastName).to.equal(newLastName);
-      expect(newContact._id).to.be.a('number')
+      expect(newContact._id).to.be.a('number');
+    });
+
+    it('check editContact to return new state object', () => {
+      const newState = reducer(state, editContact(originalEntity._id, newFirstName, newLastName));
+
+      const newContact = newState.contacts[0];
+      const oldContact = state.contacts[0];
+
+      expect(newState.contacts.length).to.equal(1);
+      expect(newState._selectedId).to.be.null;
+      expect(newContact.firstName).to.equal(newFirstName);
+      expect(newContact.lastName).to.equal(newLastName);
+      expect(newContact._id).to.be.a('number');
+
+      expect(state.contacts.length).to.equal(1);
+      expect(state._selectedId).to.be.null;
+      expect(oldContact.firstName).to.equal(originalEntity.firstName);
+      expect(oldContact.lastName).to.equal(originalEntity.lastName);
+      expect(oldContact._id).to.be.a('number');
     });
 
     it('can edit first name only', () => {
@@ -146,7 +179,7 @@ describe('contact reducer:', () => {
       expect(newState.contacts.length).to.equal(1);
       expect(newContact.firstName).to.equal(newFirstName);
       expect(newContact.lastName).to.equal(originalEntity.lastName);
-      expect(newContact._id).to.be.a('number')
+      expect(newContact._id).to.be.a('number');
     });
 
     it('can edit last name only', () => {
@@ -156,7 +189,7 @@ describe('contact reducer:', () => {
       expect(newState.contacts.length).to.equal(1);
       expect(newContact.firstName).to.equal(originalEntity.firstName);
       expect(newContact.lastName).to.equal(newLastName);
-      expect(newContact._id).to.be.a('number')
+      expect(newContact._id).to.be.a('number');
     });
 
     it('can\'t edit without first and last names', () => {
@@ -172,7 +205,7 @@ describe('contact reducer:', () => {
       expect(newContact.firstName).to.equal(newFirstName);
       expect(newContact.lastName).to.equal(newLastName);
       expect(newContact._id).to.be.a('number');
-      expect(Object.keys(newContact).length).to.equal(3)
+      expect(Object.keys(newContact).length).to.equal(3);
     });
 
     it('can\'t edit contact with unknown Id', () => {
