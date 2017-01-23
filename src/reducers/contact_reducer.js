@@ -29,7 +29,6 @@ const actions = {
 
     if (!contact) throw 'EDIT_CONTACT: unknown Id';
 
-    // const index = state.contacts.findIndex(v => v._id === contact._id);
     if (firstName) state.contacts[index].firstName = firstName;
     if (lastName) state.contacts[index].lastName = lastName;
 
@@ -67,8 +66,7 @@ export default function (state = initialState, action) {
   return actions[action.type](action, newState);
 }
 
-export const getSelectedContact = (state = initialState) => {// TODO (S.Panfilov) initialState?
-  // if(!state) return
+export const getSelectedContact = (state) => {
   if (!state._selectedId && state._selectedId !== 0) return null;
   return (state.contacts.filter(v => v._id === state._selectedId))[0];
 };

@@ -1,9 +1,6 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-
 // import styles from './ContactsList.css';
 
-import { addContact, selectContact, removeContact } from '../actions/contacts';
 import ContactsListItem from './contacts_list_item';
 
 export default class ContactsList extends React.Component {
@@ -63,8 +60,7 @@ export default class ContactsList extends React.Component {
   };
 
   render () {
-    const { contacts, dispatch, actions } = this.props;
-    const { selectContact } = actions;
+    const { contacts, actions } = this.props;
 
     return (
       <div className="contacts-list">
@@ -77,12 +73,12 @@ export default class ContactsList extends React.Component {
         <button type="button"
                 className="contacts-list__btn"
                 onClick={() => {
-                  selectContact()
+                  actions.selectContact()
                 }}
         >+</button>
         <ul className="contacts-list__list">
           {this.state.displayed.map(item =>
-            this.getListItem(item, contacts, selectContact)
+            this.getListItem(item, contacts, actions.selectContact)
           )}
         </ul>
       </div>

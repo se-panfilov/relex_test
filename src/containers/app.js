@@ -9,7 +9,7 @@ const reducer = combineReducers(reducers);
 const store = createStore(reducer);
 
 //Add Demo data
-import { addContact, selectContact } from '../actions/contacts';
+import { addContact } from '../actions/contacts';
 store.dispatch(addContact('Samuel', 'Colt'));
 store.dispatch(addContact('Gal', 'Uziel'));
 store.dispatch(addContact('John', 'Thompson'));
