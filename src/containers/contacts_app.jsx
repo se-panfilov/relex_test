@@ -24,7 +24,10 @@ class ContactsApp extends React.Component {
           selected={selectedContact}
           onSave={contact => actions.editContact(contact._id, contact.firstName, contact.lastName)}
           onAdd={contact => actions.addContact(contact.firstName, contact.lastName)}
-          onRemove={contact => actions.removeContact(contact._id)}
+          onRemove={contact => {
+            actions.selectContact();
+            actions.removeContact(contact._id);
+          }}
         />
       </div>
     );

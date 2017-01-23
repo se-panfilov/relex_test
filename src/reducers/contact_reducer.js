@@ -27,7 +27,7 @@ const actions = {
       return result;
     })[0];
 
-    if (!contact) throw 'EDIT_CONTACT: unknown Id';
+    if (!contact) throw `EDIT_CONTACT: unknown Id: ${id}`;
 
     if (firstName) state.contacts[index].firstName = firstName;
     if (lastName) state.contacts[index].lastName = lastName;
@@ -40,7 +40,7 @@ const actions = {
       return state;
     }
 
-    if (state.contacts.filter(v => v._id === id).length < 1) throw 'SELECT_CONTACT: unknown id';
+    if (state.contacts.filter(v => v._id === id).length < 1) throw `SELECT_CONTACT: unknown id: ${id}`;
     state._selectedId = id;
     return state;
   },

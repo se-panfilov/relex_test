@@ -18,14 +18,8 @@ export default class ContactsList extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const nextContacts = nextProps.contacts;
     const newState = Object.assign({}, this.state);
-
-    for (const fieldName in nextContacts) {
-      if (nextContacts.hasOwnProperty(fieldName)) {
-        newState[fieldName] = nextContacts[fieldName];
-      }
-    }
+    newState.displayed = nextProps.contacts.slice();
 
     this.setState(newState);
   }
