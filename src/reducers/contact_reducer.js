@@ -36,6 +36,11 @@ const actions = {
     return state;
   },
   [SELECT_CONTACT] ({ id }, state) {
+    if (!id) {
+      state._selectedId = null;
+      return state
+    }
+
     if (state.contacts.filter(v => v._id === id).length < 1) throw 'SELECT_CONTACT: unknown id';
     state._selectedId = id;
     return state;

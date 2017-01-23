@@ -74,6 +74,12 @@ export default class ContactsList extends React.Component {
                onChange={
                  this.onInputChange.bind(this)
                }/>
+        <button type="button"
+                className="contacts-list__btn"
+                onClick={() => {
+                  selectContact()
+                }}
+        >+</button>
         <ul className="contacts-list__list">
           {this.state.displayed.map(item =>
             this.getListItem(item, contacts, selectContact)

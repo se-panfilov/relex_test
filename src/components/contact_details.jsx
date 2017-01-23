@@ -67,7 +67,6 @@ export default class ContactDetails extends React.Component {
       submitBtn = <button type="submit"
                           onClick={e => {
                             e.preventDefault();
-                            console.warn(this.state.data)
                             this.props.onSave(this.state.data);
                           }}
       >Save
