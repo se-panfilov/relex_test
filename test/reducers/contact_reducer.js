@@ -217,9 +217,57 @@ describe('contact reducer:', () => {
       expect(() => reducer(state, editContact(null, newFirstName, newLastName))).to.throw(`${EDIT_CONTACT}: unknown Id: null`);
     });
 
-    it('can\t add new contact with non-string values', () => {
+    it('can\t edit contact with non-string values', () => {
       expect(() => reducer(state, editContact(originalEntity._id, 123, 323))).to.throw(`${EDIT_CONTACT}: firstName or lastName shall be Sting or null`);
     });
+  });
+
+  describe('Select Contact:', () => {
+    let state;
+    const originalEntity = {
+      firstName: 'John',
+      lastName: 'Smith',
+      _id: null
+    };
+
+    beforeEach(() => {
+      state = { _selectedId: null, contacts: [] };
+      const newState = reducer(state, addContact(originalEntity.firstName, originalEntity.lastName));
+      originalEntity._id = newState.contacts[0]._id;
+      state = newState;
+    });
+
+    afterEach(() => {
+      state = { _selectedId: null, contacts: [] };
+      originalEntity._id = null;
+    });
+
+    it('check select contact don\'t affect contacts array size', () => {
+      const newState = reducer(state, selectContact(originalEntity._id));
+      expect(newState.contacts.length).to.equal(1);
+    });
+
+    it('can select contact', () => {
+      const newState = reducer(state, selectContact(originalEntity._id));
+      expect(newState._selectedId).to.equal(originalEntity._id);
+    });
+
+    it('check selectContact to return new state object', () => {
+      const newState = reducer(state, selectContact(originalEntity._id));
+      expect(newState._selectedId).to.equal(originalEntity._id);
+      expect(state._selectedId).to.be.null;
+    });
+
+    it('can\'t select contact with unknown Id', () => {
+      const badId = 6666666;
+      expect(() => reducer(state, selectContact(badId))).to.throw(`${SELECT_CONTACT}: unknown id: ${badId}`);
+    });
+
+    it('can select contact without Id (un select case)', () => {
+      const newState = reducer(state, selectContact());
+      expect(newState._selectedId).to.be.null;
+    });
+
   });
 
 });
