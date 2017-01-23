@@ -260,7 +260,7 @@ describe('contact reducer:', () => {
 
     it('can\'t select contact with unknown Id', () => {
       const badId = 6666666;
-      expect(() => reducer(state, selectContact(badId))).to.throw(`${SELECT_CONTACT}: unknown id: ${badId}`);
+      expect(() => reducer(state, selectContact(badId))).to.throw(`${SELECT_CONTACT}: unknown Id: ${badId}`);
     });
 
     it('can select contact without Id (un select case)', () => {
@@ -270,4 +270,87 @@ describe('contact reducer:', () => {
 
   });
 
+  describe('Remove Contact:', () => {
+    let state;
+
+    const entities = {
+      one: {
+        firstName: 'John',
+        lastName: 'Smith',
+        _id: null
+      },
+      two: {
+        firstName: 'Ada',
+        lastName: 'Lovelace',
+        _id: null
+      }
+    };
+
+    beforeEach(() => {
+      state = { _selectedId: null, contacts: [] };
+      let firstState = reducer(state, addContact(entities.one.firstName, entities.one.lastName));
+      let secondState = reducer(firstState, addContact(entities.two.firstName, entities.two.lastName));
+      let thirdState = reducer(secondState, selectContact(secondState.contacts[0]._id));//Select John Smith
+      entities.one._id = thirdState.contacts[0]._id;
+      entities.two._id = thirdState.contacts[1]._id;
+      state = thirdState;
+    });
+
+    afterEach(() => {
+      state = { _selectedId: null, contacts: [] };
+      entities.one._id = null;
+      entities.two._id = null;
+    });
+
+    it('check remove contact don\'t affect selectedId', () => {
+      const newState = reducer(state, removeContact(entities.two._id));
+      expect(newState._selectedId).to.equal(entities.one._id);
+    });
+
+    it('check remove contact can affect selectedId', () => {
+      const newState = reducer(state, removeContact(entities.one._id));
+      expect(newState._selectedId).to.be.null;
+    });
+
+    it('can remove one contact', () => {
+      expect(state.contacts.length).to.equal(2);
+
+      const newState = reducer(state, removeContact(entities.two._id));
+      const newContact = newState.contacts[0];
+
+      expect(newState.contacts.length).to.equal(1);
+      expect(newContact.firstName).to.not.equal(entities.two.firstName);
+      expect(newContact.lastName).to.not.equal(entities.two.lastName);
+      expect(newContact._id).to.be.a('number');
+      expect(newContact._id).to.not.equal(entities.two._id);
+    });
+
+    it('can remove all contacts', () => {
+      expect(state.contacts.length).to.equal(2);
+
+      const stateOne = reducer(state, removeContact(entities.one._id));
+      const stateTwo = reducer(stateOne, removeContact(entities.two._id));
+
+      expect(stateTwo.contacts.length).to.equal(0);
+      expect(stateTwo._selectedId).to.be.null;
+    });
+
+    // TODO (S.Panfilov)
+    // it('check removeContact to return new state object', () => {
+    //   const newState = reducer(state, removeContact(entities.one._id));
+    //   expect(newState._selectedId).to.equal(entities.one._id);
+    //   expect(state._selectedId).to.be.null;
+    // });
+
+    it('can\'t remove contact with unknown Id', () => {
+      const badId = 6666666;
+      expect(() => reducer(state, removeContact(badId))).to.throw(`${REMOVE_CONTACT}: unknown Id: ${badId}`);
+    });
+
+    it('can\' remove contact without Id ', () => {
+      expect(() => reducer(state, removeContact())).to.throw(`${REMOVE_CONTACT}: no Id provided`);
+    });
+
+  });
+// TODO (S.Panfilov) add checks in case of id===0
 });

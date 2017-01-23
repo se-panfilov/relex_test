@@ -22,12 +22,6 @@ const actions = {
     return state;
   },
   [EDIT_CONTACT]({ id, firstName, lastName }, state) {
-    // // const newState = Object.assign({}, state)
-    // const newState = {}
-    // newState.contacts = []
-    // newState.contacts.push({ firstName: firstName })
-    // // newState.contacts[0].firstName = firstName
-    // return newState
     if (!isStringOrNotExist(firstName) || !isStringOrNotExist(lastName)) {
       throw `${EDIT_CONTACT}: firstName or lastName shall be Sting or null`;
     }
@@ -54,12 +48,16 @@ const actions = {
       return state;
     }
 
-    if (state.contacts.filter(v => v._id === id).length < 1) throw `${SELECT_CONTACT}: unknown id: ${id}`;
+    if (state.contacts.filter(v => v._id === id).length < 1) throw `${SELECT_CONTACT}: unknown Id: ${id}`;
     state._selectedId = id;
     return state;
   },
   [REMOVE_CONTACT]({ id }, state) {
-    state.contacts = state.contacts.filter(v => v._id !== id);
+    if (!id && id !== 0) throw `${REMOVE_CONTACT}: no Id provided`;
+    const newContacts = state.contacts.filter(v => v._id !== id);
+    if (newContacts.length === state.contacts.length) throw`${REMOVE_CONTACT}: unknown Id: ${id}`;
+
+    state.contacts = newContacts;
     if (state._selectedId === id) state._selectedId = null;
     return state;
   }
