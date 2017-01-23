@@ -22,7 +22,10 @@ export default class ContactDetails extends React.Component {
     };
 
     // TODO (S.Panfilov) curWorkPoint: fix edit mode and fix add new contact
-    this.setMode(selected);
+    // this.setMode(this.props.selected);
+    // this.state.editing = !!(this.props.selected && (this.props.selected._id || this.props.selected.id === 0));
+    // console.info(`selected: ${this.props.selected}`)
+    // console.info(`editing: ${this.state.editing}`)
   }
 
   onInputChange (fieldName, event) {
@@ -43,11 +46,15 @@ export default class ContactDetails extends React.Component {
       }
     }
 
+    newState.editing = !!(this.props.selected && (this.props.selected._id || this.props.selected._id === 0));
+    console.info(`newState.editing: ${newState.editing}`)
+    // console.info(`id: ${this.props.selected._id}`)
+
     this.setState(newState);
   }
 
   getInput (name, selected) {
-    console.info(selected)
+    // console.info(selected)
     // if (selected) {
     return <input type="text"
                   value={this.state.data[name]}
@@ -59,7 +66,7 @@ export default class ContactDetails extends React.Component {
 
   setMode (selected) {
     const newState = Object.assign({}, this.state);
-    newState.editing = !!(selected && (selected._id || selected.id === 0));
+    newState.editing = !!(selected && (selected._id || selected._id === 0));
     this.setState(newState);
   }
 
