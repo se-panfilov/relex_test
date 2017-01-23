@@ -11,28 +11,35 @@ export default class ContactsList extends React.Component {
     super(props);
 
     this.state = {
+      filter: '',
       displayed: props.contacts.slice()
     };
   }
 
   componentWillReceiveProps(nextProps) {
     const newState = Object.assign({}, this.state);
-    newState.displayed = nextProps.contacts.slice();
+    // newState.displayed = nextProps.contacts.slice();
+    newState.displayed = this.getFilteredList(nextProps.contacts, this.state.filter);
 
     this.setState(newState);
   }
 
-  onInputChange(e) {
-    const newDisplayed = this.props.contacts.filter(v => {
+  onInputChange(event) {
+    const newState = Object.assign({}, this.state);
+    newState.filter = event.target.value;
+    newState.displayed = this.getFilteredList(this.props.contacts, event.target.value);
+    this.setState(newState);
+  }
+
+  getFilteredList(arr, value) {
+    if (!value && value === '') return this.props.contacts;
+
+    return arr.filter(v => {
       const firstName = v.firstName.toLowerCase();
       const lastName = v.lastName.toLowerCase();
-      const val = e.target.value.toLowerCase();
+      const val = value.toLowerCase();
 
       return firstName.includes(val) || lastName.includes(val);
-    });
-
-    this.setState({
-      displayed: newDisplayed
     });
   }
 
@@ -104,14 +111,13 @@ export default class ContactsList extends React.Component {
               className="contacts-list__input--search"
               style={style.search}
               placeholder="Search"
-              value={this.state.input}
+              value={this.state.filter}
               onChange={
                 this.onInputChange.bind(this)
               }
             />
           </div>
           <div className="contacts-list__top-column">
-            {/*<h3>Contacts</h3>*/}
             <button type="button"
               className="contacts-list__btn"
               style={style.button}

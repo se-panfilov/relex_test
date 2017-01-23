@@ -89,8 +89,6 @@ export default class ContactDetails extends React.Component {
       }
     };
 
-    console.info(this.state.editing)
-
     return (
       <div className="contacts-details">
         <form name="contact-details-form"
