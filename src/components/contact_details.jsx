@@ -37,10 +37,11 @@ export default class ContactDetails extends React.Component {
     this.setState(newState);
   }
 
-  getInput(name) {
+  getInput(name, style) {
     return (<input type="text"
       value={this.state.data[name]}
       onChange={(e) => this.onInputChange.call(this, name, e)}
+      style={style}
     />);
   }
 
@@ -50,29 +51,80 @@ export default class ContactDetails extends React.Component {
   }
 
   render() {
+
+    const style = {
+      inputBlock: {
+        display: 'block',
+        margin: '15px'
+      },
+      input: {
+        display: 'block',
+        height: '34px',
+        padding: '6px 12px',
+        fontSize: '14px',
+        lineHeight: '1.42857143',
+        color: '#555',
+        backgroundColor: '#fff',
+        border: '1px solid #ccc',
+        borderRadius: '4px'
+      },
+      btn: {
+        color: '#333',
+        backgroundColor: '#fff',
+        borderColor: '#ccc',
+        display: 'inline-block',
+        padding: '6px 12px',
+        marginBottom: '0',
+        fontSize: '14px',
+        fontWeight: '400',
+        lineHeight: '1.42857143',
+        textAlign: 'center',
+        whiteSpace: 'nowrap',
+        verticalAlign: 'middle',
+        cursor: 'pointer',
+        backgroundImage: 'none',
+        border: '1px solid #ccc',
+        borderRadius: '4px'
+      }
+    };
+
     return (
       <div className="contacts-details">
         <form name="contact-details-form"
           id="contact-details-form"
           className="contacts-details__form">
-          {this.getInput('firstName')}
-          {this.getInput('lastName')}
-          <button type="submit"
-            onClick={(e) => {
-              e.preventDefault();
-              this.onSubmit.call(this);
-            }}
-          >{this.state.editing ? 'Save' : 'Create'}
-          </button>
-          {this.state.editing ?
-            <button type="button"
+          <div className="contacts-details__input-block" style={style.inputBlock}>
+            <label> First Name
+              {this.getInput('firstName', style.input)}
+            </label>
+          </div>
+          <div className="contacts-details__input-block" style={style.inputBlock}>
+            <label> Last Name
+              {this.getInput('lastName', style.input)}
+            </label>
+          </div>
+          <div className="contacts-details__controls">
+            <button type="submit"
+              className="contacts-details__btn"
+              style={style.btn}
               onClick={(e) => {
                 e.preventDefault();
-                this.props.onRemove(this.state.data);
+                this.onSubmit.call(this);
               }}
-            >Remove
-            </button> : <span />
-          }
+            >{this.state.editing ? 'Save' : 'Create'}
+            </button>
+            {this.state.editing ?
+              <button type="button"
+                className="contacts-details__btn"
+                style={style.btn}
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.props.onRemove(this.state.data);
+                }}
+              >Remove
+              </button> : <span />
+            }
+          </div>
         </form>
       </div>
     );

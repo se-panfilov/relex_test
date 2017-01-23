@@ -16,19 +16,36 @@ class ContactsApp extends React.Component {
     const { contacts, selectedContact, dispatch } = this.props;
     const actions = bindActionCreators(ContactsActions, dispatch);
 
+    const style = {
+      app: {
+        display: 'flex'
+      },
+      leftColumn: {
+        flex: '1 0 20%',
+        margin: '5px'
+      },
+      rightColumn: {
+        flex: '1 0 80%',
+        margin: '5px'
+      }
+    };
+
     return (
-      <div className="app">
-        <h1>Contacts</h1>
-        <ContactsList contacts={contacts} actions={actions} />
-        <ContactDetails
-          selected={selectedContact}
-          onSave={contact => actions.editContact(contact._id, contact.firstName, contact.lastName)}
-          onAdd={contact => actions.addContact(contact.firstName, contact.lastName)}
-          onRemove={contact => {
-            actions.selectContact();
-            actions.removeContact(contact._id);
-          }}
-        />
+      <div className="app" style={style.app}>
+        <div className="app__column" style={style.leftColumn}>
+          <ContactsList contacts={contacts} actions={actions} />
+        </div>
+        <div className="app__column" style={style.rightColumn}>
+          <ContactDetails
+            selected={selectedContact}
+            onSave={contact => actions.editContact(contact._id, contact.firstName, contact.lastName)}
+            onAdd={contact => actions.addContact(contact.firstName, contact.lastName)}
+            onRemove={contact => {
+              actions.selectContact();
+              actions.removeContact(contact._id);
+            }}
+          />
+        </div>
       </div>
     );
   }

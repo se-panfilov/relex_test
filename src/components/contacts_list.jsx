@@ -55,6 +55,11 @@ export default class ContactsList extends React.Component {
     const { contacts, actions } = this.props;
 
     const style = {
+      container: {},
+      top: {
+        marginBottom: '15px',
+        display: 'flex'
+      },
       search: {
         display: 'block',
         width: '100%',
@@ -82,7 +87,7 @@ export default class ContactsList extends React.Component {
         verticalAlign: 'middle',
         cursor: 'pointer',
         backgroundImage: 'none',
-        border: '1px solid transparent',
+        border: '1px solid #ccc',
         borderRadius: '4px'
       },
       list: {
@@ -92,24 +97,31 @@ export default class ContactsList extends React.Component {
     };
 
     return (
-      <div className="contacts-list">
-        <input type="search"
-          className="contacts-list__input--search"
-          style={style.search}
-          placeholder="Search"
-          value={this.state.input}
-          onChange={
-            this.onInputChange.bind(this)
-          }
-        />
-        <button type="button"
-          className="contacts-list__btn"
-          style={style.search}
-          onClick={() => {
-            actions.selectContact();
-          }}
-        >+
-        </button>
+      <div className="contacts-list" style={style.container}>
+        <div className="contacts-list__top" style={style.top}>
+          <div className="contacts-list__top-column">
+            <input type="search"
+              className="contacts-list__input--search"
+              style={style.search}
+              placeholder="Search"
+              value={this.state.input}
+              onChange={
+                this.onInputChange.bind(this)
+              }
+            />
+          </div>
+          <div className="contacts-list__top-column">
+            {/*<h3>Contacts</h3>*/}
+            <button type="button"
+              className="contacts-list__btn"
+              style={style.button}
+              onClick={() => {
+                actions.selectContact();
+              }}
+            >+
+            </button>
+          </div>
+        </div>
         <ul className="contacts-list__list" style={style.list}>
           {this.state.displayed.map(item =>
             this.getListItem(item, contacts, actions.selectContact, style.listItem)
