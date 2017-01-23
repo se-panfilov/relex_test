@@ -15,6 +15,7 @@ export default class ContactDetails extends React.Component {
     this.state = {
       editing: !!(props.selected && props.selected._id),
       data: {
+        _id: null,
         firstName: '',
         lastName: ''
       }
@@ -23,10 +24,10 @@ export default class ContactDetails extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const newState = Object.assign({}, this.state);
-    const selected = nextProps.selected || { firstName: '', lastName: '' };
+    const selected = nextProps.selected || { _id: null, firstName: '', lastName: '' };
 
     Object.assign(newState.data, selected);
-    newState.editing = !!(this.props.selected && this.props.selected._id);
+    newState.editing = !!(selected._id);
 
     this.setState(newState);
   }
@@ -51,7 +52,6 @@ export default class ContactDetails extends React.Component {
   }
 
   render() {
-
     const style = {
       inputBlock: {
         display: 'block',
@@ -88,6 +88,8 @@ export default class ContactDetails extends React.Component {
         margin: '3px'
       }
     };
+
+    console.info(this.state.editing)
 
     return (
       <div className="contacts-details">
