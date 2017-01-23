@@ -31,7 +31,6 @@ export default class ContactsList extends React.Component {
   }
 
   onInputChange(e) {
-
     const newDisplayed = this.props.contacts.filter(v => {
       const firstName = v.firstName.toLowerCase();
       const lastName = v.lastName.toLowerCase();
@@ -42,12 +41,12 @@ export default class ContactsList extends React.Component {
 
     this.setState({
       displayed: newDisplayed
-    })
-  };
+    });
+  }
 
   getListItem(item, contacts, selectContact) {
     if (contacts && contacts.length > 0) {
-      return <ContactsListItem
+      return (<ContactsListItem
         key={item._id}
         id={item._id}
         firstName={item.firstName}
@@ -55,7 +54,7 @@ export default class ContactsList extends React.Component {
         onClick={() => {
           selectContact(item._id);
         }}
-      />;
+      />);
     }
   }
 
@@ -65,16 +64,17 @@ export default class ContactsList extends React.Component {
     return (
       <div className="contacts-list">
         <input type="search"
-               placeholder="Search"
-               value={this.state.input}
-               onChange={
-                 this.onInputChange.bind(this)
-               }/>
+          placeholder="Search"
+          value={this.state.input}
+          onChange={
+            this.onInputChange.bind(this)
+          }
+        />
         <button type="button"
-                className="contacts-list__btn"
-                onClick={() => {
-                  actions.selectContact();
-                }}
+          className="contacts-list__btn"
+          onClick={() => {
+            actions.selectContact();
+          }}
         >+
         </button>
         <ul className="contacts-list__list">

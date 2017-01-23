@@ -38,10 +38,10 @@ export default class ContactDetails extends React.Component {
   }
 
   getInput(name) {
-    return <input type="text"
-                  value={this.state.data[name]}
-                  onChange={(e) => this.onInputChange.call(this, name, e)}
-    />;
+    return (<input type="text"
+      value={this.state.data[name]}
+      onChange={(e) => this.onInputChange.call(this, name, e)}
+    />);
   }
 
   onSubmit() {
@@ -53,23 +53,23 @@ export default class ContactDetails extends React.Component {
     return (
       <div className="contacts-details">
         <form name="contact-details-form"
-              id="contact-details-form"
-              className="contacts-details__form">
+          id="contact-details-form"
+          className="contacts-details__form">
           {this.getInput('firstName')}
           {this.getInput('lastName')}
           <button type="submit"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    this.onSubmit.call(this);
-                  }}
+            onClick={(e) => {
+              e.preventDefault();
+              this.onSubmit.call(this);
+            }}
           >{this.state.editing ? 'Save' : 'Create'}
           </button>
           {this.state.editing ?
             <button type="button"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      this.props.onRemove(this.state.data);
-                    }}
+              onClick={(e) => {
+                e.preventDefault();
+                this.props.onRemove(this.state.data);
+              }}
             >Remove
             </button> : <span />
           }

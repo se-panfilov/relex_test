@@ -12,11 +12,11 @@ export default class ContactsListItem extends React.Component {
     return (
       <li className="contacts-list__list-item">
         <a href="#"
-           className="contacts-list__item-text"
-           onClick={e => {
-             e.preventDefault();
-             this.props.onClick();
-           }}
+          className="contacts-list__item-text"
+          onClick={e => {
+            e.preventDefault();
+            this.props.onClick();
+          }}
         >{this.props.firstName} {this.props.lastName}</a>
       </li>
     );
