@@ -15,13 +15,18 @@ const initialState = {
 const actions = {
   [ADD_CONTACT]({ firstName, lastName }, state) {
     if (!firstName && !lastName) throw `${ADD_CONTACT}: no data passed`;
+    if (!isStringOrNotExist(firstName) || !isStringOrNotExist(lastName)) {
+      throw `${ADD_CONTACT}: firstName or lastName shall be Sting or null`;
+    }
     state.contacts = state.contacts.concat(new Contact(firstName, lastName));
     return state;
   },
   [EDIT_CONTACT]({ id, firstName, lastName }, state) {
-    // TODO (S.Panfilov)check for unknown id error
+    if (!isStringOrNotExist(firstName) || !isStringOrNotExist(lastName)) {
+      throw `${EDIT_CONTACT}: firstName or lastName shall be Sting or null`;
+    }
 
-    let index;// TODO (S.Panfilov)check index
+    let index;
     const contact = state.contacts.filter((v, i) => {
       const result = v._id === id;
       if (result) index = i;
@@ -52,6 +57,11 @@ const actions = {
     return state;
   }
 };
+
+function isStringOrNotExist(val) {
+  if (!val && val !== 0) return true;
+  return (typeof val === 'string' || val instanceof String);
+}
 
 function createStateCopy(state) {
   //It's better to use deep cloning here, but I'm too old for this shit)))

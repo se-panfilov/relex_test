@@ -36,7 +36,6 @@ describe('contact reducer:', () => {
     });
 
     // TODO (S.Panfilov) check return new state
-    // TODO (S.Panfilov) invalid data type case
     it('check add contact don\'t affect selectedId', () => {
       const state = { _selectedId: null, contacts: [] };
       const newState = reducer(state, addContact(firstName, lastName));
@@ -96,12 +95,14 @@ describe('contact reducer:', () => {
       expect(Object.keys(newContact).length).to.equal(3)
     });
 
+    it('can\t add new contact with non-string values', () => {
+      expect(() => reducer(state, addContact(123, 323))).to.throw(`${ADD_CONTACT}: firstName or lastName shall be Sting or null`);
+    });
+
   });
 
   describe('Edit Contact:', () => {
     // TODO (S.Panfilov) check return new state
-    // TODO (S.Panfilov) invalid data type case
-
     let state;
     const originalEntity = {
       firstName: 'John',
@@ -183,6 +184,9 @@ describe('contact reducer:', () => {
       expect(() => reducer(state, editContact(null, newFirstName, newLastName))).to.throw(`${EDIT_CONTACT}: unknown Id: null`);
     });
 
+    it('can\t add new contact with non-string values', () => {
+      expect(() => reducer(state, editContact(originalEntity._id, 123, 323))).to.throw(`${EDIT_CONTACT}: firstName or lastName shall be Sting or null`);
+    });
   });
 
 });
