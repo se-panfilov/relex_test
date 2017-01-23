@@ -32,7 +32,7 @@ export default class ContactsList extends React.Component {
   }
 
   getFilteredList(arr, value) {
-    if (!value && value === '') return this.props.contacts;
+    if (!value && value === '') return arr;
 
     return arr.filter(v => {
       const firstName = v.firstName.toLowerCase();
