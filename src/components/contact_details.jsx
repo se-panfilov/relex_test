@@ -4,7 +4,6 @@ import React, { PropTypes } from 'react';
 export default class ContactDetails extends React.Component {
   static propTypes = { // TODO (S.Panfilov)fix isRequired
     selected: PropTypes.object,
-    actions: PropTypes.object.isRequired,
     onSave: PropTypes.func,
     onAdd: PropTypes.func,
     onRemove: PropTypes.func
@@ -72,7 +71,6 @@ export default class ContactDetails extends React.Component {
 
   render () {
     let { selected, dispatch } = this.props;
-    // const actions = bindActionCreators(ContactsActions, dispatch);
 
     console.log(this.state.editing);
     // if (!selected) selected = { firstName: 'qqq', lastName: 'www' }; // TODO (S.Panfilov) fix this alts
@@ -90,7 +88,7 @@ export default class ContactDetails extends React.Component {
                     e.preventDefault();
                     this.onSubmit.call(this);
                   }}
-          >Ok
+          >{this.state.editing ? 'Save' : 'Create'}
           </button>
           {this.state.editing ?
             < button type="button"

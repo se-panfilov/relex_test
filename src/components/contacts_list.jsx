@@ -16,7 +16,7 @@ export default class ContactsList extends React.Component {
     super(props);
 
     this.state = {
-      displayed: props.contacts
+      displayed: props.contacts.slice()
     };
   }
 
