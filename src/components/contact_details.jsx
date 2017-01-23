@@ -14,18 +14,12 @@ export default class ContactDetails extends React.Component {
     super(props);
 
     this.state = {
-      editing: false,
+      editing: !!(props.selected && props.selected._id),
       data: {
-        firstName: 'qqq',
-        lastName: 'www'
+        firstName: '',
+        lastName: ''
       }
     };
-
-    // TODO (S.Panfilov) curWorkPoint: fix edit mode and fix add new contact
-    // this.setMode(this.props.selected);
-    // this.state.editing = !!(this.props.selected && (this.props.selected._id || this.props.selected.id === 0));
-    // console.info(`selected: ${this.props.selected}`)
-    // console.info(`editing: ${this.state.editing}`)
   }
 
   onInputChange (fieldName, event) {
@@ -35,33 +29,34 @@ export default class ContactDetails extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    const selectedProp = nextProps.selected || { firstName: 'qqq', lastName: 'www' }; // TODO (S.Panfilov) fix this alts
     const newState = Object.assign({}, this.state);
+    const selected = nextProps.selected || { firstName: '', lastName: '' };
+    Object.assign(newState.data, selected);
 
-    for (const fieldName in selectedProp) {
-      if (selectedProp.hasOwnProperty(fieldName)) {
-        if (selectedProp[fieldName] !== this.state.data[fieldName]) {
-          newState.data[fieldName] = selectedProp[fieldName];
-        }
-      }
-    }
+    // if (!nextProps.selected) nextProps.selected = Object.assign({}, this.state.data);
+    // console.info(nextProps.selected)
+    // for (const fieldName in nextProps.selected) {
+    //   // console.info(123)
+    //   if (nextProps.selected.hasOwnProperty(fieldName)) {
+    //     // console.info(`nextProps.selected[${fieldName}]: ${nextProps.selected[fieldName]}`)
+    //     if (nextProps.selected[fieldName] !== this.state.data[fieldName]) {
+    //       newState.data[fieldName] = nextProps.selected[fieldName];
+    //     }
+    //   }
+    // }
 
-    newState.editing = !!(this.props.selected && (this.props.selected._id || this.props.selected._id === 0));
-    console.info(`newState.editing: ${newState.editing}`)
-    // console.info(`id: ${this.props.selected._id}`)
+    newState.editing = !!(this.props.selected && this.props.selected._id);
 
+    console.warn(newState.editing)
     this.setState(newState);
   }
 
-  getInput (name, selected) {
-    // console.info(selected)
-    // if (selected) {
+  getInput (name) {
+    // console.info(this.state.data)
     return <input type="text"
                   value={this.state.data[name]}
                   onChange={(e) => this.onInputChange.call(this, name, e)}
     />
-    // }
-    // return null
   };
 
   setMode (selected) {
@@ -70,44 +65,42 @@ export default class ContactDetails extends React.Component {
     this.setState(newState);
   }
 
+  onSubmit () {
+    const method = (this.state.editing) ? 'onSave' : 'onAdd';
+    this.props[method](this.state.data);
+  }
+
   render () {
     let { selected, dispatch } = this.props;
     // const actions = bindActionCreators(ContactsActions, dispatch);
 
-    console.warn(this.state.editing)
-    if (!selected) selected = { firstName: 'qqq', lastName: 'www' }; // TODO (S.Panfilov) fix this alts
-
-    let submitBtn;
-    if (!this.state.editing) {
-      submitBtn = <button type="submit"
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.onAdd({
-                              firstName: this.state.data.firstName,
-                              lastName: this.state.data.lastName
-                            });
-                          }}
-      >Save
-      </button>
-    } else {
-      submitBtn = <button type="submit"
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.onSave(this.state.data);
-                          }}
-      >Save
-      </button>
-    }
-
+    console.log(this.state.editing);
+    // if (!selected) selected = { firstName: 'qqq', lastName: 'www' }; // TODO (S.Panfilov) fix this alts
+    // if (!selected) selected = {}; // TODO (S.Panfilov) fix this alts
 
     return (
       <div className="contacts-details">
         <form name="contact-details-form"
               id="contact-details-form"
               className="contacts-details__form">
-          {this.getInput('firstName', selected)}
-          {this.getInput('lastName', selected)}
-          {submitBtn}
+          {this.getInput('firstName')}
+          {this.getInput('lastName')}
+          <button type="submit"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    this.onSubmit.call(this);
+                  }}
+          >Ok
+          </button>
+          {this.state.editing ?
+            < button type="button"
+                     onClick={(e) => {
+                       e.preventDefault();
+                       this.props.onRemove(this.state.data);
+                     }}
+            >Remove
+            </button> : <span></span>
+          }
         </form>
       </div>
     );

@@ -16,16 +16,16 @@ class ContactsApp extends React.Component {
   // componentWillReceiveProps (nextProps) {
   //   console.info('C-App')
   //   console.info(nextProps.contacts)
-    // const nextContacts = nextProps.contacts;
-    // const newState = Object.assign({}, this.state);
-    //
-    // for (const fieldName in nextContacts) {
-    //   if (nextContacts.hasOwnProperty(fieldName)) {
-    //     newState[fieldName] = nextContacts[fieldName];
-    //   }
-    // }
-    //
-    // this.setState(newState);
+  // const nextContacts = nextProps.contacts;
+  // const newState = Object.assign({}, this.state);
+  //
+  // for (const fieldName in nextContacts) {
+  //   if (nextContacts.hasOwnProperty(fieldName)) {
+  //     newState[fieldName] = nextContacts[fieldName];
+  //   }
+  // }
+  //
+  // this.setState(newState);
   // }
 
   render () {
@@ -40,7 +40,10 @@ class ContactsApp extends React.Component {
           selected={selectedContact}
           actions={actions}
           onSave={contact => actions.editContact(contact._id, contact.firstName, contact.lastName)}
-          onAdd={contact => actions.addContact(contact.firstName, contact.lastName)}
+          onAdd={contact => {
+            cons
+            actions.addContact(contact.firstName, contact.lastName)
+          }}
           onRemove={contact => actions.removeContact(contact._id)}
         />
       </div>
