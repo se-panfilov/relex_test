@@ -5,7 +5,9 @@ export default class ContactDetails extends React.Component {
   static propTypes = { // TODO (S.Panfilov)fix isRequired
     selected: PropTypes.object,
     actions: PropTypes.object.isRequired,
-    onSave: PropTypes.func
+    onSave: PropTypes.func,
+    onAdd: PropTypes.func,
+    onRemove: PropTypes.func
   };
 
   constructor (props) {
@@ -13,8 +15,14 @@ export default class ContactDetails extends React.Component {
 
     this.state = {
       editing: false,
-      data: {}
+      data: {
+        firstName: 'qqq',
+        lastName: 'www'
+      }
     };
+
+    // TODO (S.Panfilov) curWorkPoint: fix edit mode and fix add new contact
+    this.setMode(selected);
   }
 
   onInputChange (fieldName, event) {
@@ -24,7 +32,7 @@ export default class ContactDetails extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    const selectedProp = nextProps.selected;
+    const selectedProp = nextProps.selected || { firstName: 'qqq', lastName: 'www' }; // TODO (S.Panfilov) fix this alts
     const newState = Object.assign({}, this.state);
 
     for (const fieldName in selectedProp) {
@@ -39,30 +47,41 @@ export default class ContactDetails extends React.Component {
   }
 
   getInput (name, selected) {
-    if (selected) {
-      return <input type="text"
-                    value={this.state.data[name]}
-                    onChange={(e) => this.onInputChange.call(this, name, e)}
-      />
-    }
-    return null
+    console.info(selected)
+    // if (selected) {
+    return <input type="text"
+                  value={this.state.data[name]}
+                  onChange={(e) => this.onInputChange.call(this, name, e)}
+    />
+    // }
+    // return null
   };
 
+  setMode (selected) {
+    const newState = Object.assign({}, this.state);
+    newState.editing = !!(selected && (selected._id || selected.id === 0));
+    this.setState(newState);
+  }
+
   render () {
-    const { selected, dispatch } = this.props;
+    let { selected, dispatch } = this.props;
     // const actions = bindActionCreators(ContactsActions, dispatch);
 
+    console.warn(this.state.editing)
+    if (!selected) selected = { firstName: 'qqq', lastName: 'www' }; // TODO (S.Panfilov) fix this alts
+
     let submitBtn;
-    if (this.state.editing) {
-      // submitBtn = <button type="submit"
-      //                     onClick={e => {
-      //                       e.preventDefault();
-      //                       this.props.onClick('remove');
-      //                     }}
-      {/*>Remove*/
-      }
-      {/*</button>*/
-      }
+    if (!this.state.editing) {
+      submitBtn = <button type="submit"
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.onAdd({
+                              firstName: this.state.data.firstName,
+                              lastName: this.state.data.lastName
+                            });
+                          }}
+      >Save
+      </button>
     } else {
       submitBtn = <button type="submit"
                           onClick={e => {
