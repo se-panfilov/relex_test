@@ -14,7 +14,7 @@ const initialState = {
 
 const actions = {
   [ADD_CONTACT] ({ firstName, lastName }, state) {
-    state.contacts = state.contacts.concat(new Contact(firstName, lastName, state.contacts));
+    state.contacts = state.contacts.concat(new Contact(firstName, lastName));
     return state;
   },
   [EDIT_CONTACT] ({ id, firstName, lastName }, state) {
