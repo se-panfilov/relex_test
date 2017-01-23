@@ -9,7 +9,7 @@ export default class ContactDetails extends React.Component {
     onRemove: PropTypes.func
   };
 
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -21,13 +21,7 @@ export default class ContactDetails extends React.Component {
     };
   }
 
-  onInputChange (fieldName, event) {
-    const newState = Object.assign({}, this.state);
-    newState.data[fieldName] = event.target.value;
-    this.setState(newState);
-  }
-
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     const newState = Object.assign({}, this.state);
     const selected = nextProps.selected || { firstName: '', lastName: '' };
 
@@ -37,19 +31,25 @@ export default class ContactDetails extends React.Component {
     this.setState(newState);
   }
 
-  getInput (name) {
+  onInputChange(fieldName, event) {
+    const newState = Object.assign({}, this.state);
+    newState.data[fieldName] = event.target.value;
+    this.setState(newState);
+  }
+
+  getInput(name) {
     return <input type="text"
                   value={this.state.data[name]}
                   onChange={(e) => this.onInputChange.call(this, name, e)}
-    />
-  };
+    />;
+  }
 
-  onSubmit () {
+  onSubmit() {
     const method = (this.state.editing) ? 'onSave' : 'onAdd';
     this.props[method](this.state.data);
   }
 
-  render () {
+  render() {
     return (
       <div className="contacts-details">
         <form name="contact-details-form"
@@ -65,13 +65,13 @@ export default class ContactDetails extends React.Component {
           >{this.state.editing ? 'Save' : 'Create'}
           </button>
           {this.state.editing ?
-            < button type="button"
-                     onClick={(e) => {
-                       e.preventDefault();
-                       this.props.onRemove(this.state.data);
-                     }}
+            <button type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      this.props.onRemove(this.state.data);
+                    }}
             >Remove
-            </button> : <span></span>
+            </button> : <span />
           }
         </form>
       </div>

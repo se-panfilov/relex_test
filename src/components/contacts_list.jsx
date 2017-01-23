@@ -9,7 +9,7 @@ export default class ContactsList extends React.Component {
     actions: PropTypes.object.isRequired
   };
 
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -17,7 +17,7 @@ export default class ContactsList extends React.Component {
     };
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     const nextContacts = nextProps.contacts;
     const newState = Object.assign({}, this.state);
 
@@ -30,14 +30,14 @@ export default class ContactsList extends React.Component {
     this.setState(newState);
   }
 
-  onInputChange (e) {
+  onInputChange(e) {
 
     const newDisplayed = this.props.contacts.filter(v => {
       const firstName = v.firstName.toLowerCase();
       const lastName = v.lastName.toLowerCase();
       const val = e.target.value.toLowerCase();
 
-      return firstName.includes(val) || lastName.includes(val)
+      return firstName.includes(val) || lastName.includes(val);
     });
 
     this.setState({
@@ -45,7 +45,7 @@ export default class ContactsList extends React.Component {
     })
   };
 
-  getListItem (item, contacts, selectContact) {
+  getListItem(item, contacts, selectContact) {
     if (contacts && contacts.length > 0) {
       return <ContactsListItem
         key={item._id}
@@ -53,13 +53,13 @@ export default class ContactsList extends React.Component {
         firstName={item.firstName}
         lastName={item.lastName}
         onClick={() => {
-          selectContact(item._id)
+          selectContact(item._id);
         }}
-      />
+      />;
     }
-  };
+  }
 
-  render () {
+  render() {
     const { contacts, actions } = this.props;
 
     return (
@@ -73,9 +73,10 @@ export default class ContactsList extends React.Component {
         <button type="button"
                 className="contacts-list__btn"
                 onClick={() => {
-                  actions.selectContact()
+                  actions.selectContact();
                 }}
-        >+</button>
+        >+
+        </button>
         <ul className="contacts-list__list">
           {this.state.displayed.map(item =>
             this.getListItem(item, contacts, actions.selectContact)

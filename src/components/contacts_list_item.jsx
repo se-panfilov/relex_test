@@ -8,14 +8,14 @@ export default class ContactsListItem extends React.Component {
     onClick: PropTypes.func
   };
 
-  render () {
+  render() {
     return (
       <li className="contacts-list__list-item">
         <a href="#"
            className="contacts-list__item-text"
            onClick={e => {
              e.preventDefault();
-             this.props.onClick()
+             this.props.onClick();
            }}
         >{this.props.firstName} {this.props.lastName}</a>
       </li>

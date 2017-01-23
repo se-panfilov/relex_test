@@ -12,14 +12,14 @@ class ContactsApp extends React.Component {
     dispatch: PropTypes.func.isRequired
   };
 
-  render () {
+  render() {
     const { contacts, selectedContact, dispatch } = this.props;
     const actions = bindActionCreators(ContactsActions, dispatch);
 
     return (
       <div className="app">
         <h1>Contacts</h1>
-        <ContactsList contacts={contacts} actions={actions}/>
+        <ContactsList contacts={contacts} actions={actions} />
         <ContactDetails
           selected={selectedContact}
           onSave={contact => actions.editContact(contact._id, contact.firstName, contact.lastName)}
@@ -35,5 +35,5 @@ export default connect(state => {
   return {
     contacts: state.contacts.contacts,
     selectedContact: getSelectedContact(state.contacts)
-  }
+  };
 })(ContactsApp);

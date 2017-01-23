@@ -19,11 +19,11 @@ store.dispatch(addContact('Leon', 'Nagant'));
 //End of Demo data
 
 export default class App extends React.Component {
-  render () {
+  render() {
     return (
       <div>
         <Provider store={store}>
-          <ContactsApp/>
+          <ContactsApp />
         </Provider>
       </div>
     );

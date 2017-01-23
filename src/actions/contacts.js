@@ -5,7 +5,7 @@ import {
   REMOVE_CONTACT
 } from '../constants/action_types';
 
-export function addContact (firstName, lastName) {
+export function addContact(firstName, lastName) {
   return {
     type: ADD_CONTACT,
     firstName,
@@ -13,7 +13,7 @@ export function addContact (firstName, lastName) {
   };
 }
 
-export function editContact (id, firstName, lastName) {
+export function editContact(id, firstName, lastName) {
   return {
     type: EDIT_CONTACT,
     id,
@@ -22,14 +22,14 @@ export function editContact (id, firstName, lastName) {
   };
 }
 
-export function selectContact (id) {
+export function selectContact(id) {
   return {
     type: SELECT_CONTACT,
     id
   };
 }
 
-export function removeContact (id) {
+export function removeContact(id) {
   return {
     type: REMOVE_CONTACT,
     id
