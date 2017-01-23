@@ -16,6 +16,8 @@ store.dispatch(addContact('John', 'Thompson'));
 store.dispatch(addContact('Mikhail', 'Kalashnikov'));
 store.dispatch(addContact('Gaston', 'Glock'));
 store.dispatch(addContact('Leon', 'Nagant'));
+store.dispatch(addContact('Richard', 'Gatling'));
+store.dispatch(addContact('Hiram', 'Maxim'));
 //End of Demo data
 
 export default class App extends React.Component {

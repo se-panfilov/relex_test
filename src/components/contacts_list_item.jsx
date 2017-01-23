@@ -9,10 +9,23 @@ export default class ContactsListItem extends React.Component {
   };
 
   render() {
+    const style = {
+      listItem: {
+        color: '#555',
+        textDecoration: 'none',
+        listStyle: 'none'
+      },
+      link: {
+        color: '#555',
+        textDecoration: 'none'
+      }
+    };
+
     return (
-      <li className="contacts-list__list-item">
+      <li className="contacts-list__list-item" style={style.listItem}>
         <a href="#"
           className="contacts-list__item-text"
+          style={style.link}
           onClick={e => {
             e.preventDefault();
             this.props.onClick();
