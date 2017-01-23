@@ -14,6 +14,7 @@ const initialState = {
 
 const actions = {
   [ADD_CONTACT]({ firstName, lastName }, state) {
+    if (!firstName && !lastName) throw `${ADD_CONTACT}: no data passed`;
     state.contacts = state.contacts.concat(new Contact(firstName, lastName));
     return state;
   },
@@ -27,11 +28,12 @@ const actions = {
       return result;
     })[0];
 
-    if (!contact) throw `EDIT_CONTACT: unknown Id: ${id}`;
+    if (!contact) throw `${EDIT_CONTACT}: unknown Id: ${id}`;
 
     if (firstName) state.contacts[index].firstName = firstName;
     if (lastName) state.contacts[index].lastName = lastName;
 
+    if (!firstName && !lastName) throw `${EDIT_CONTACT}: no data passed`;
     return state;
   },
   [SELECT_CONTACT]({ id }, state) {
@@ -40,7 +42,7 @@ const actions = {
       return state;
     }
 
-    if (state.contacts.filter(v => v._id === id).length < 1) throw `SELECT_CONTACT: unknown id: ${id}`;
+    if (state.contacts.filter(v => v._id === id).length < 1) throw `${SELECT_CONTACT}: unknown id: ${id}`;
     state._selectedId = id;
     return state;
   },
