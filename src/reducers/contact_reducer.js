@@ -55,7 +55,7 @@ const actions = {
   [REMOVE_CONTACT]({ id }, state) {
     if (!id && id !== 0) throw `${REMOVE_CONTACT}: no Id provided`;
     const newContacts = state.contacts.filter(v => v._id !== id);
-    if (newContacts.length === state.contacts.length) throw`${REMOVE_CONTACT}: unknown Id: ${id}`;
+    if (newContacts.length === state.contacts.length) throw `${REMOVE_CONTACT}: unknown Id: ${id}`;
 
     state.contacts = newContacts;
     if (state._selectedId === id) state._selectedId = null;

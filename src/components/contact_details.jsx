@@ -43,7 +43,7 @@ export default class ContactDetails extends React.Component {
       value={this.state.data[name]}
       onChange={(e) => this.onInputChange.call(this, name, e)}
       style={style}
-    />);
+            />);
   }
 
   onSubmit() {
@@ -93,7 +93,8 @@ export default class ContactDetails extends React.Component {
       <div className="contacts-details">
         <form name="contact-details-form"
           id="contact-details-form"
-          className="contacts-details__form">
+          className="contacts-details__form"
+        >
           <div className="contacts-details__input-block" style={style.inputBlock}>
             <label> First Name
               {this.getInput('firstName', style.input)}

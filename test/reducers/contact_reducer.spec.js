@@ -451,7 +451,7 @@ describe('contact reducer:', () => {
 
       it('should return state when unknown action type', () => {
         const state = { _selectedId: null, contacts: [] };
-        const action = {type: 'some'};
+        const action = { type: 'some' };
         expect(reducer(state, action)).to.deep.equal(state)
       });
 

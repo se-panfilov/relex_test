@@ -53,7 +53,7 @@ export default class ContactsList extends React.Component {
           selectContact(item._id);
         }}
         style={style}
-      />);
+              />);
     }
   }
 
