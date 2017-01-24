@@ -457,7 +457,5 @@ describe('contact reducer:', () => {
 
     });
 
-
   });
-// TODO (S.Panfilov) add checks in case of id===0
 });
